@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.explanation {
+  font-family: 'Song Myung', serif;
+  font-size: 20px;
+}
+
+
+.total{
+  margin: 60px;
+  /*margin-left: 50px;*/
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/javasc.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+</head>
+<body>
+<p>함수 설명</p>
+<p>수식 입력</p>
+<textarea class="calOutput" cols="30" rows="10" style=" width:247px; height:21px;"></textarea>
+<button class="plus" onclick="Output('+')">+</button>
+<button class="min" onclick="Output('-')">-</button>
+<button class="mul" onclick="Output('*')">*</button>
+<button class="init" onclick="init()">Clear</button>
+<button class="div" onclick="Output('/')">/</button>
+<button class="dot" onclick="Output('.')">.</button>
+<button class="equal" onclick="cal()">=</button>
+
+<script>
+
+    const output=document.querySelector(".calOutput");
+
+    function Output(buttonValue){
+        const outputValue=output.value+buttonValue;
+        output.value=outputValue;
+    }
+
+    function cal(){
+        output.value=eval(output.value);
+    }
+
+    function init(){
+        output.value='';
+    }
+
+
+</script>
+
+</body>
+</html>
