@@ -7,7 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Song+Myung&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 
 <script src="/javascripts/javasc.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -23,8 +23,15 @@
               new_input='';
           }
       }
+      if((new_input === "(" || new_input === ")")){
+
+
+
+      }
       $("#answer").val(old_input + new_input);
   });
+
+
 
   $(document).on("click",'.equals', function(value) {
       // var a = $('#answer').val(); //함수를 이용하여 계산 -> 이 함수를 이용한 것과 후위계산법의 차이는?
@@ -41,24 +48,30 @@
           console.log('1')
           if(add.length===0){
               add.push(arr[ad]);
+              console.log(add)
           }
           else {
               // console.log(typeof (add[add.length-1]));
               // console.log(isNaN(add[add.length-1])); // "2"일 때 string인데 false가 나옴, 따옴표 안에 값을 본다는 것
               // console.log(typeof(arr[ad]));
               if(isNaN(add[add.length-1])===false && isNaN(arr[ad])===false){ //string으로 되어 있으니 붙일 수 있었음...
+                  console.log('4')
                   add[add.length-1]=Number(add[add.length-1]+arr[ad]);
               }
-              else if(add[add.length-1]==='-' && isNaN(arr[ad])===false){//마이너스와 숫자가 붙어있다면-
+              else if((add[add.length-1]==='-' && isNaN(arr[ad])===false)){//마이너스와 숫자가 붙어있다면-
+                  console.log('5')
                   add[add.length-1]=Number(add[add.length-1]+arr[ad]);
               }
               else if((add[add.length-1]!='('&& add[add.length-1]!=')')&&(arr[ad]!=')'&& arr[ad]!='(')&&isNaN(add[add.length-1])===true&& isNaN(arr[ad])===true){
+                  console.log('6')
                   exception2 = 2 //전에 있거나 앞으로 올 것들 중 괄호가 없는 상황에서, 연산자끼리 붙으면 망망
+                  console.log(add)
                   break;
               }
 
               else{
                   add.push(arr[ad]);
+
               }
           }
       }
@@ -151,6 +164,13 @@
            if(isNaN(stack_cal[variable])){ //true인 상태, 즉 연산자가 들어온 경우
                if(stack_cal[variable-1]<0 && stack_cal[variable]==='-'){
                    sum_cal[sum_cal.length-1]=Math.abs(stack_cal[variable-1]);
+                   console.log(sum_cal)
+               }
+               // if (stack_cal.length===2){
+               //
+               // }
+               else if(stack_cal[variable-1]<0 && stack_cal[variable]<0){
+
                }
                else{
                    var num2=sum_cal.pop();
@@ -163,9 +183,16 @@
                        console.log(sum_cal);
                    }
                    else if(stack_cal[variable]==='-'){
+                       console.log('h')
+                       // if(Number(num2)<0){
+                       //     num2=Math.abs(Number(num2));
+                       //     cal_sum=Number(num1)+Number(num2);
+                       // }
+                       // else{
                        cal_sum=Number(num1)-Number(num2);
                        sum_cal.push(cal_sum);
-                       console.log(sum_cal);
+                       // }
+                       // console.log(sum_cal);
                    }
                    else if(stack_cal[variable]==='*'){
                        cal_sum=Number(num1)*Number(num2);
@@ -181,14 +208,12 @@
            }
            else{ //정수인 것
                sum_cal.push(stack_cal[variable]);
-               console.log(stack_cal);
                console.log(sum_cal);
            }
            variable++
        }
-       if(sum_cal.length===2){
-           sum_cal[0]=Number(sum_cal[0])+Number(sum_cal[1]);
-           sum_cal.pop();
+       if(sum_cal.length!=0){ //여러개가 남으면 다 합치기
+
        }
 
        console.log(sum_cal);
@@ -207,25 +232,37 @@
 
 <body>
 <div class="container">
-    <div class="total">
-        <p class="explanation">함수 설명</p>
-        <div class="form-group row">
-            <p class="explanation col-sm-4">수식 입력</p>
-            <div class="col-sm-10">
+    <div class="total box">
+        <div class="row">
+            <p class="explanation">함수 설명</p>
+            <div class="col-10">
+                <input type="text" id="Function_description" value="" style="width:98%; height:35px;" disabled/>
+            </div>
+        </div>
+        <div class="row">
+            <p class="explanation">수식 입력</p>
+            <div class="col-10">
                 <input type="text" id="answer" value="" style="width:98%; height:35px;"/>
             </div>
         </div>
+        <br>
         <button class="cal"  id="plus" value="+" >+</button>
         <button class="cal"  id="minus" value="-">-</button>
         <button class="cal" id="multiply"  value="*">*</button>
-        <button class="init"  value="c">Clear</button>
         <button class="cal" id="div" value="/">/</button>
-        <button class="cal" id="bracket_f"  value="(">(</button>
-        <button class="cal" id="bracket_b" value=")">)</button>
+        <button class="cal" id="Squared" value="^">^</button>
+        <button class="cal" id="Remainder" value="%">%</button>
+        <button class="cal" id="bracket_f"  value="(">()</button>
+        <!--<button class="cal" id="bracket_b" value=")">)</button>-->
         <button class="function" id="if" value="if[,,]">if[,,]</button>
+
+        <button class="init"  value="c">Clear</button>
         <button class="equals"  value="=">=</button>
-        <br>
+        <br><br>
+        <p class="explanation">결과값</p>
+
         <input type="text" id="result" value="" style="width:98%; height:35px;" disabled/>
+
     </div>
 
 </div>

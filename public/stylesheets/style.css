@@ -4,12 +4,24 @@ body {
 }
 
 .explanation {
-  font-family: 'Song Myung', serif;
-  font-size: 20px;
+  font-family: 'Do Hyeon', sans-serif;
+
 }
 
 
 .total{
   margin: 60px;
   /*margin-left: 50px;*/
+}
+
+.box{
+  margin:30px;
+  padding: 50px;
+  border: 1px solid;
+
+}
+
+.cal{
+  width:50px;
+  height:30px;
 }
