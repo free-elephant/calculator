@@ -68,6 +68,10 @@
                   console.log(add)
                   break;
               }
+              //7(5)가 안되는 경우
+              else if(){
+
+              }
 
               else{
                   add.push(arr[ad]);
@@ -212,12 +216,23 @@
            }
            variable++
        }
+       var sum=0;
        if(sum_cal.length!=0){ //여러개가 남으면 다 합치기
-
+           for(var sum_cal_variable=0; sum_cal_variable<sum_cal.length; sum_cal_variable++){
+               sum+=sum_cal[sum_cal_variable]
+               $('#result').val(sum)
+               console.log(sum);
+           }
+       }
+       else{
+           sum=sum_cal[0]
+           $('#result').val(sum) ;
+           //$('#result').val() =sum_cal[0]  이게 안되는 이유는
+           console.log(sum);
        }
 
-       console.log(sum_cal);
-       $('#result').val(sum_cal[0]) ; //$('#result').val() =sum_cal[0]  이게 안되는 이유는
+
+
    }
 
 
