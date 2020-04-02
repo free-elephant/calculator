@@ -1,0 +1,293 @@
+<!--<h1><%= message %></h1>-->
+<!--<h2><%= error.status %></h2>-->
+<!--<pre><%= error.stack %></pre>-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Song+Myung&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <script src="/javascripts/javasc.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+
+        //정리
+        $(document).on("click",'.cal', function(){
+            var old_input=$("#answer").val();
+            var new_input=$(this).val();
+            if(old_input=="" ) { //기존에 아무것도 없는 상황에서
+                if ((new_input === "*" || new_input === "/")) { // 곱셈 나눗셈은 불가능하다고 예외처리
+                    alert("곱셈 또는 나눗셈으로 시작할 수 없습니다.");
+                    new_input='';
+                }
+            }
+            $("#answer").val(old_input + new_input);
+        });
+
+
+
+        $(document).on("click",'.equals', function(value) {
+            // var a = $('#answer').val(); //함수를 이용하여 계산 -> 이 함수를 이용한 것과 후위계산법의 차이는?
+            // $('#answer').val(eval(a));
+            var arr= new Array();
+            var ans = $('#answer').val();
+            arr=ans.split("") // 배열로 만들기
+
+            //예외처리를 위한 변수 만들기
+            var exception1 = 0;
+            var exception2 = 0;
+            var exception3 = 0;
+
+            var add=new Array(); //숫자가 두개 있으면 붙여주기 위해
+            for (var ad = 0; arr.length>ad; ad++){
+                if(add.length===0){ //한글이 들어간 경우
+                    add.push(arr[ad]);
+                }
+                else if(add.length===0){
+                    add.push(arr[ad]);
+                }
+                else {
+                    // console.log(typeof (add[add.length-1]));
+                    // console.log(isNaN(add[add.length-1])); // "2"일 때 string인데 false가 나옴, 따옴표 안에 값을 본다는 것
+                    // console.log(typeof(arr[ad]));
+                    if(isNaN(add[add.length-1])===false && isNaN(arr[ad])===false){ //string으로 되어 있으니 붙일 수 있었음...
+                        add[add.length-1]=Number(add[add.length-1]+arr[ad]);
+                        if(add[add.length-1]>1000000000000000 || add[add.length-1]<-1000000000000000){
+                            exception1 = 2;
+                            break;
+                        }
+                        console.log(add)
+                    }
+                    else if((add[add.length-1]==='-' && isNaN(arr[ad])===false)){//마이너스와 숫자가 붙어있다면-
+                        add[add.length-1]=Number(add[add.length-1]+arr[ad]);
+                        console.log(add)
+                    }
+                    else if((add[add.length-1]!='('&& add[add.length-1]!=')')&&(arr[ad]!=')'&& arr[ad]!='(')&&isNaN(add[add.length-1])===true&& isNaN(arr[ad])===true){
+                        exception2 = 2 //전에 있거나 앞으로 올 것들 중 괄호가 없는 상황에서, 연산자끼리 붙으면 망망
+                        break;
+                    }
+                    //7(5)가 안되는 경우 : 숫자 뒤에 바로 (괄호가 오거나 )괄호뒤에 바로 숫자가 오면.
+                    else if((isNaN(add[add.length-1])===false && arr[ad]==='(') ||(add[add.length-1]===')' && isNaN(arr[ad])===false )){
+                        exception3 = 2
+                        break;
+                    }
+
+                    else{
+                        add.push(arr[ad]);
+
+                    }
+                }
+            }
+
+            console.log(add)
+
+            //예외처리 및 실행
+            if (add[0]==='*' || add[0]==='/' || add[0]==='+'){ //첫 시작 연산자
+                alert("연산자로 시작할 수 없습니다.");
+            }
+            else if(exception1===2){ //연산자끼리 붙어 있는 경우, 괄호 제외
+                alert("계산할 수 있는 자릿수를 초과하셨습니다.")
+            }
+            else if(exception2===2){ //연산자끼리 붙어 있는 경우, 괄호 제외
+                alert("연산자끼리는 붙을 수 없습니다")
+            }
+            else if(exception3===2){ //연산자끼리 붙어 있는 경우, 괄호 제외
+                alert("괄호와 숫자만으로 계산할 수 없습니다.")
+            }
+            //글자가 들어왔을 경우
+            //마지막 글자가 기호인경우
+            else{
+                var stack_cal=formula(add);
+                calculation(stack_cal);
+            }
+        });
+
+
+
+
+        function formula(add){
+            var vs = new Array(); // 연산자들 비교하기 위한 배열
+            var stack_cal = new Array(); //후위계산식 / [] 이렇게 만드는 것과 어떤 차이가 있을까?
+            var rule ={
+                "*" : 50,
+                "/" : 50,
+                "+" : 40,
+                "-" : 40,
+                "(" : 0
+            }
+            var i=0;
+            while(i<add.length){ //후위표기식 만들기
+                if(isNaN(add[i])){ //숫자가 아니라면
+                    if(vs.length===0){ //비교할 것이 없으면
+                        vs.push(add[i]); //우선  push
+                    }
+                    else if(add[i]==='('){
+                        vs.push(add[i]);
+                    }
+                    else if(add[i]===')'){ //닫는 괄호가 나타나면
+                        //여는 괄호가 나타날때까지
+                        while(1) {
+                            var temp=vs.pop();
+                            if(temp==='('){
+                                break;
+                            }
+                            stack_cal.push(temp);
+                        }
+                    }
+                    else{ // 연산자끼리 비교할 때
+
+                        if(rule[vs[vs.length-1]]>=rule[add[i]]){ //기존에 있던 연산자가 크거나 같으면 pop
+                            stack_cal.push(vs.pop());
+                            vs.push(add[i])
+                        }
+                        else{ //들어오는 연산자가 크면 push
+                            vs.push(add[i]);
+                        }
+                    }
+                }
+                else{ //숫자라면
+                    stack_cal.push(add[i]);
+                    console.log(stack_cal)
+                }
+                i++
+            }
+            if (vs.length!=0){
+                while(1){
+                    stack_cal.push(vs.pop()); //마지막으로 남아있는 연산자들 pop
+                    if (vs.length===0){
+                        break;
+                    }
+                }
+            }
+            console.log(stack_cal)
+            return stack_cal
+
+        }
+
+        function  calculation(stack_cal){
+            var variable=0
+            var sum =0;
+            var cal_sum;
+            var sum_cal = new Array();
+            while(stack_cal.length>variable){
+                if(isNaN(stack_cal[variable])){ //true인 상태, 즉 연산자가 들어온 경우
+                    if(stack_cal[variable-1]<0 && stack_cal[variable]==='-'){
+                        sum_cal[sum_cal.length-1]=Math.abs(stack_cal[variable-1]);
+                        console.log(sum_cal)
+                    }
+                    // if (stack_cal.length===2){
+                    //
+                    // }
+                    else if(stack_cal[variable-1]<0 && stack_cal[variable]<0){
+
+                    }
+                    else{
+                        var num2=sum_cal.pop();
+                        console.log(num2);
+                        var num1=sum_cal.pop();
+                        console.log(num1);
+                        if(stack_cal[variable]==='+'){ //이렇게 일일이 하는 것이 아니라 계산해주는 함수도 있을까?
+                            cal_sum=Number(num1)+Number(num2);
+                            sum_cal.push(cal_sum);
+                            console.log(sum_cal);
+                        }
+                        else if(stack_cal[variable]==='-'){
+                            console.log('h')
+                            cal_sum=Number(num1)-Number(num2);
+                            sum_cal.push(cal_sum);
+                        }
+                        else if(stack_cal[variable]==='*'){
+                            cal_sum=Number(num1)*Number(num2);
+                            sum_cal.push(cal_sum);
+                            console.log(sum_cal);
+                        }
+                        else if(stack_cal[variable]==='/'){
+                            cal_sum=Number(num1)/Number(num2);
+                            sum_cal.push(cal_sum);
+                            console.log(sum_cal);
+                        }
+                    }
+                }
+                else{ //정수인 것
+                    sum_cal.push(stack_cal[variable]);
+                    console.log(sum_cal);
+                }
+                variable++
+            }
+            var sum=0;
+            if(sum_cal.length!=0){ //여러개가 남으면 다 합치기
+                for(var sum_cal_variable=0; sum_cal_variable<sum_cal.length; sum_cal_variable++){
+                    sum+=Number(sum_cal[sum_cal_variable]);
+                    $('#result').val(sum)
+                    console.log(sum);
+                }
+            }
+            else{
+                sum=sum_cal[0]
+                $('#result').val(sum) ;
+                //$('#result').val() =sum_cal[0]  이게 안되는 이유는
+                console.log(sum);
+            }
+
+
+
+        }
+
+
+
+        $(document).on("click",'.init', function(value) {
+            $('#answer').val('') ;
+            $('#result').val('') ;
+
+        });
+
+    </script>
+</head>
+
+<body>
+<div class="container">
+    <div class="total box">
+        <div class="row">
+            <p class="explanation">함수 설명</p>
+            <div class="col-10">
+                <input type="text" id="Function_description" value="" style="width:98%; height:35px;" disabled/>
+            </div>
+        </div>
+        <div class="row">
+            <p class="explanation">수식 입력</p>
+            <div class="col-10">
+                <input type="text" id="answer" value="" style="width:98%; height:35px;"/>
+            </div>
+        </div>
+        <br>
+        <button class="cal"  id="plus" value="+" >+</button>
+        <button class="cal"  id="minus" value="-">-</button>
+        <button class="cal" id="multiply"  value="*">*</button>
+        <button class="cal" id="div" value="/">/</button>
+        <button class="cal" id="Squared" value="^">^</button>
+        <button class="cal" id="Remainder" value="%">%</button>
+        <button class="cal" id="bracket_f"  value="(">()</button>
+        <!--<button class="cal" id="bracket_b" value=")">)</button>-->
+        <button class="function" id="if" value="if[,,]">if[,,]</button>
+
+        <button class="init"  value="c">Clear</button>
+        <button class="equals"  value="=">=</button>
+        <br><br>
+        <p class="explanation">결과값</p>
+
+        <input type="text" id="result" value="" style="width:98%; height:35px;" disabled/>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

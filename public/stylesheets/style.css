@@ -1,17 +1,27 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*background-color: cadetblue;*/
+}
+
+.background{
+  background-color: cadetblue;
 }
 
 .explanation {
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Jua', sans-serif;
 
 }
 
 
 .total{
-  margin: 60px;
+  margin: 50px;
   /*margin-left: 50px;*/
+  height: 600px;
+  width: 760px;;
+  position: absolute;;
+  left: 50%;
+  transform: translate(-50%,0);
+
 }
 
 .box{
@@ -21,7 +31,60 @@ body {
 
 }
 
-.cal{
-  width:50px;
-  height:30px;
+.btn-sm{
+  margin:1px;
+  margin-bottom: 4px;
+  width: 60px;
+  font-size: 10px;
+
 }
+
+/*.cal{*/
+  /*width:50px;*/
+  /*height:30px;*/
+/*}*/
+
+input.function_explanation{ /*왜 이렇게 하면 안 먹히지?*/
+  margin-bottom: 10px;
+}
+.column_left {
+  float: left;
+  width: 480px;
+}
+
+.column_right{
+  /*position: relative;*/
+  float: right;
+  width: 177px;
+
+}
+
+/*div { 차이는?*/
+  /*display: block;*/
+/*}*/
+
+.result{
+  margin: 5px;
+}
+
+.Equation{
+  margin-top:10px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.equals{
+  margin-top:10px;
+}
+input{
+  border-radius : 3px;
+}
+
+#Function_description{
+  margin-bottom: 8px;
+}
+
+/*.init{*/
+  /*width: 125px;*/
+/*}*/
