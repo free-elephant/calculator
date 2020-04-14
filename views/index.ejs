@@ -60,146 +60,171 @@
     // function keydown(){
     // $('#Equation').keypress(function (event) {
 
-    $(document).on("keydown",'#Equation', function(){
-        var num_value_val = new Array()
-        var selectPos_s =0
-        // var selectPos_e =0
-        var num_value = document.getElementById('Equation');
-        var num_value_value=num_value.value;
-        num_value_val = num_value.value.split(""); //배열
-        console.log(num_value_val)
-        // num_value_val= num_value_val.replace(/(\s*)/g,"")
-        console.log(num_value_val[num_value_val.length-1])
+    // $(document).on("keydown",'#Equation', function(){
+    //     var num_value_val = new Array()
+    //     var selectPos_s =0
+    //     // var selectPos_e =0
+    //     var num_value = document.getElementById('Equation');
+    //     var num_value_value=num_value.value;
+    //     num_value_val = num_value.value.split(""); //배열
+    //     console.log(num_value_val)
+    //     // num_value_val= num_value_val.replace(/(\s*)/g,"")
+    //     console.log(num_value_val[num_value_val.length-1])
+    //
+    //     selectPos_s = num_value.selectionStart; //END START 차이
+    //     // selectPos_e = num_value.selectionEnd;
+    //     // console.log(num_value_val[selectPos_s])
+    //     var find_function; //함수 찾은 자리
+    //
+    //     var beforetext = num_value_value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
+    //     var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
+    //
+    //     console.log(beforetext)
+    //     console.log(aftertext)
+    //     console.log(num_value_val[num_value_val.length-1])
+    //     console.log(num_value_val[num_value_val.length-2])
+    //     console.log(selectPos_s)
+    //     console.log(num_value_val[selectPos_s]) //left
+    //     console.log(num_value_val[selectPos_s-1]) //right
+    //
+    //
+    //     var if_before_confirm=0;
+    //     var if_after_confirm=0;
+    //     var before_comma=0;
+    //     var after_comma=0;
+    //
+    //     for (var confirm=0; beforetext.length>confirm;confirm++){
+    //         console.log(beforetext[confirm])
+    //         if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
+    //             console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    //             console.log(confirm)
+    //             console.log(beforetext[confirm])
+    //             if_before_confirm=2;
+    //             if(beforetext[beforetext.length-1]===']'){
+    //                 console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    //                 if_after_confirm=2;
+    //                 break;
+    //
+    //             }
+    //             break;
+    //         }
+    //         else{
+    //
+    //         }
+    //
+    //     }
+    //
+    //     for (var confirm=0; aftertext.length>confirm;confirm++){
+    //         console.log(beforetext[beforetext.length-1])
+    //         if(aftertext[confirm]===']'){
+    //             console.log("hoooooooooooooo")
+    //             if_after_confirm=2;
+    //             break;
+    //         }
+    //     }
+    //
+    //
+    //
+    //
+    //
+    //      if(if_before_confirm===2&&if_after_confirm===2){ //지우기
+    //          console.log(beforetext)
+    //          console.log(beforetext.length-1)
+    //          console.log(beforetext[beforetext.length-1])
+    //
+    //         //함수라는 걸 인식한 다음 이런 부분에 대해서 비교+
+    //         if(event.keyCode===8) {
+    //
+    //
+    //             for (var confirm=0; beforetext.length>confirm;confirm++){
+    //                 console.log(beforetext[confirm])
+    //                 if((beforetext[confirm]!='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]!='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]!='[')){
+    //                     console.log("!ghdghhgfjlhg!")
+    //                     console.log(confirm)
+    //                     console.log(beforetext[confirm])
+    //                     if_before_confirm=0;
+    //                     break;
+    //                 }
+    //                 else if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')&&beforetext[beforetext.length-1]!=']'){
+    //                     console.log("00000")
+    //                     if_after_confirm=0;
+    //                 }
+    //
+    //             }
+    //             var comma_find_before_variable=0;
+    //             while(1){
+    //                 if(beforetext[comma_find_before_variable]===','){
+    //                     before_comma=before_comma+1
+    //                     console.log(before_comma)
+    //                     console.log("hiiiiiiiiiiiiiiiiiiii")
+    //                 }
+    //                 else if(comma_find_before_variable===beforetext.length){
+    //                     console.log("hiiiiiiiiiiiiiiiiiiii")
+    //                     break;
+    //                 }
+    //                 else if(comma_find_before_variable>10){
+    //                     console.log("hiiiiiiiiiiiiiiiiiiii")
+    //                     break;
+    //                 }
+    //                 comma_find_before_variable++
+    //                 console.log(comma_find_before_variable)
+    //             }
+    //
+    //             var comma_find_after_variable=0;
+    //             while(1){
+    //                 if(aftertext[comma_find_after_variable]===','){
+    //                     console.log("hiiiiiiiiiiiiiiiiiiii")
+    //                     after_comma=after_comma+1
+    //                     console.log(after_comma)
+    //                 }
+    //                 else if(comma_find_after_variable===aftertext.length){
+    //                     console.log("hiiiiiiiiiiiiiiiiiiii")
+    //                     break;
+    //                 }
+    //                 else if(comma_find_after_variable>10){
+    //                     console.log("hiiiiiiiiiiiiiiiiiiii")
+    //                     return
+    //                 }
+    //                 comma_find_after_variable++
+    //                 console.log(comma_find_after_variable)
+    //             }
+    //             alert("EWW")
+    //             console.log(before_comma)
+    //             console.log(after_comma)
+    //             if(((if_before_confirm===0||if_after_confirm===0)&&(before_comma+after_comma==2))||before_comma+after_comma!=2){
+    //                 alert("삭제")
+    //
+    //             }
+    //
+    //         }
+    //     }
+    //
+    // });
 
-        selectPos_s = num_value.selectionStart; //END START 차이
-        // selectPos_e = num_value.selectionEnd;
-        // console.log(num_value_val[selectPos_s])
-        var find_function; //함수 찾은 자리
 
-        var beforetext = num_value_value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
-        var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
-
-        console.log(beforetext)
-        console.log(aftertext)
-        console.log(num_value_val[num_value_val.length-1])
-        console.log(num_value_val[num_value_val.length-2])
-        console.log(selectPos_s)
-        console.log(num_value_val[selectPos_s]) //left
-        console.log(num_value_val[selectPos_s-1]) //right
-
-
-        var if_before_confirm=0;
-        var if_after_confirm=0;
-        var before_comma=0;
-        var after_comma=0;
-
-        for (var confirm=0; beforetext.length>confirm;confirm++){
-            console.log(beforetext[confirm])
-            if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
-                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                console.log(confirm)
-                console.log(beforetext[confirm])
-                if_before_confirm=2;
-                if(beforetext[beforetext.length-1]===']'){
-                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                    if_after_confirm=2;
-                    break;
-
-                }
-                break;
-            }
-            else{
-
-            }
-
-        }
-
-        for (var confirm=0; aftertext.length>confirm;confirm++){
-            console.log(beforetext[beforetext.length-1])
-            if(aftertext[confirm]===']'){
-                console.log("hoooooooooooooo")
-                if_after_confirm=2;
-                break;
-            }
-        }
+    // for (var confirm=0; beforetext.length>confirm;confirm++){
+    //     console.log(beforetext[confirm])
+    //     console.log(beforetext[beforetext.length-1])
+    //     if((beforetext[confirm]==='IF'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
+    //         console.log(beforetext[confirm])
+    //         if_before_confirm=2;
+    //         if(beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[' && beforetext[beforetext.length-1]===']'){
+    //             if_after_confirm=2;
+    //
+    //         }
+    //         break;
+    //     }
+    //
+    // }
+    // for (var confirm=0; aftertext.length>confirm;confirm++){
+    //     if(aftertext[confirm]===']'){
+    //         if_after_confirm=2;
+    //         break;
+    //     }
+    // }
 
 
 
-
-
-         if(if_before_confirm===2&&if_after_confirm===2){ //지우기
-             console.log(beforetext)
-             console.log(beforetext.length-1)
-             console.log(beforetext[beforetext.length-1])
-
-            //함수라는 걸 인식한 다음 이런 부분에 대해서 비교+
-            if(event.keyCode===8) {
-
-
-                for (var confirm=0; beforetext.length>confirm;confirm++){
-                    console.log(beforetext[confirm])
-                    if((beforetext[confirm]!='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]!='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]!='[')){
-                        console.log("!ghdghhgfjlhg!")
-                        console.log(confirm)
-                        console.log(beforetext[confirm])
-                        if_before_confirm=0;
-                        break;
-                    }
-                    else if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')&&beforetext[beforetext.length-1]!=']'){
-                        console.log("00000")
-                        if_after_confirm=0;
-                    }
-
-                }
-                var comma_find_before_variable=0;
-                while(1){
-                    if(beforetext[comma_find_before_variable]===','){
-                        before_comma=before_comma+1
-                        console.log(before_comma)
-                        console.log("hiiiiiiiiiiiiiiiiiiii")
-                    }
-                    else if(comma_find_before_variable===beforetext.length){
-                        console.log("hiiiiiiiiiiiiiiiiiiii")
-                        break;
-                    }
-                    else if(comma_find_before_variable>10){
-                        console.log("hiiiiiiiiiiiiiiiiiiii")
-                        break;
-                    }
-                    comma_find_before_variable++
-                    console.log(comma_find_before_variable)
-                }
-
-                var comma_find_after_variable=0;
-                while(1){
-                    if(aftertext[comma_find_after_variable]===','){
-                        console.log("hiiiiiiiiiiiiiiiiiiii")
-                        after_comma=after_comma+1
-                        console.log(after_comma)
-                    }
-                    else if(comma_find_after_variable===aftertext.length){
-                        console.log("hiiiiiiiiiiiiiiiiiiii")
-                        break;
-                    }
-                    else if(comma_find_after_variable>10){
-                        console.log("hiiiiiiiiiiiiiiiiiiii")
-                        return
-                    }
-                    comma_find_after_variable++
-                    console.log(comma_find_after_variable)
-                }
-                alert("EWW")
-                console.log(before_comma)
-                console.log(after_comma)
-                if(((if_before_confirm===0||if_after_confirm===0)&&(before_comma+after_comma==2))||before_comma+after_comma!=2){
-                    alert("삭제")
-
-                }
-
-            }
-        }
-
-    });
 
     $(document).on("keyup",'#Equation', function(){
             var num_value_val = new Array()
@@ -215,11 +240,14 @@
             selectPos_s = num_value.selectionStart; //END START 차이
             // selectPos_e = num_value.selectionEnd;
             // console.log(num_value_val[selectPos_s])
-            var find_function; //함수 찾은 자리
+
+
+
 
             var beforetext = num_value_value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
             var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
-
+            beforetext =eng_paste( beforetext )
+            aftertext =eng_paste( aftertext )
             console.log(beforetext)
             console.log(aftertext)
             console.log(num_value_val[num_value_val.length-1])
@@ -234,6 +262,9 @@
             var before_comma=0;
             var after_comma=0;
 
+            var round_before_confirm=0;
+            var round_after_confirm=0;
+
 
 
 
@@ -241,21 +272,30 @@
             for (var confirm=0; beforetext.length>confirm;confirm++){
                 console.log(beforetext[confirm])
                 console.log(beforetext[beforetext.length-1])
-                if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
+                else if((beforetext[confirm]==='IF'&&beforetext[confirm+1]==='[')||(beforetext[confirm]==='IF'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
                     console.log(beforetext[confirm])
                     if_before_confirm=2;
-                    if(beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[' && beforetext[beforetext.length-1]===']'){
-                        if_after_confirm=2;
-
-                    }
+                    // if(beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[' && beforetext[beforetext.length-1]===']'){
+                    //     if_after_confirm=2;
+                    //
+                    // }
+                    break;
+                }
+                else if((beforetext[confirm]==='Round'&&beforetext[confirm+1]==='[')||(beforetext[confirm]==='Round'&&aftertext[0]==='[')||(beforetext[confirm]==='Roun'&&aftertext[0]==='d'&&aftertext[1]==='[')
+                ||(beforetext[confirm]==='Rou'&&aftertext[0]==='nd'&&aftertext[1]==='[')
+                ||(beforetext[confirm]==='Ro'&&aftertext[0]==='und'&&aftertext[1]==='[')
+                ||(beforetext[confirm]==='R'&&aftertext[0]==='ound'&&aftertext[1]==='[')){
+                    console.log(beforetext[confirm])
+                    round_before_confirm=2;
                     break;
                 }
 
-            }
 
+            }
             for (var confirm=0; aftertext.length>confirm;confirm++){
                 if(aftertext[confirm]===']'){
                     if_after_confirm=2;
+                    round_after_confirm=2;
                     break;
                 }
             }
@@ -269,7 +309,12 @@
                     $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
                 }
                 else if(if_before_confirm===2&&if_after_confirm===2){
-                    $('#Function_description').val("IF[비교값,참,거젓] 조건값을 구하는 함수입니다.")
+                    $('#Function_description').val("IF[비교값,참,거짓] 조건값을&#10;구하는 함수입니다.")
+                    $('#function_explanation').val("IF[비교값,참,거젓] 조건값을 구하는 함수입니다.")
+                }
+                else if(round_before_confirm===2&&round_after_confirm===2){
+                    $('#Function_description').val("Round[입력값,적용값] 적용값이 양수일 때 소수점 아래에서 반올림, 음수일 경우 정수자리에서 반올림 되도록 합니다.")
+
                 }
 
                 else{
@@ -280,6 +325,12 @@
             else if(event.keyCode==39){ //RIGHT
                 if(num_value_val[selectPos_s-1]==='+' ||num_value_val[selectPos_s]==='-'||num_value_val[selectPos_s]==='*'||num_value_val[selectPos_s]==='/'   ){
                     $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
+                }
+                else if(if_before_confirm===2&&if_after_confirm===2){
+                    $('#Function_description').val("IF[비교값,참,거젓] 조건값을 구하는 함수입니다.")
+                }
+                else if(round_before_confirm===2&&round_after_confirm===2){
+                    $('#Function_description').val("Round[입력값,적용값] 적용값이 양수일 때 소수점 아래에서 반올림, 음수일 경우 정수자리에서 반올림 되도록 합니다.")
                 }
                 else{
                     $('#Function_description').val("")
@@ -292,7 +343,7 @@
                 equals_button()
             }
 
-            // else if(event.keyCode===8){ //지우기
+            else if(event.keyCode===8){ //지우기
             //     console.log(beforetext)
             //     console.log(beforetext.length-1)
             //     //함수라는 걸 인식한 다음 이런 부분에 대해서 비교+
@@ -344,7 +395,7 @@
             //     }
             //
             //
-            // }
+            }
 
             //자동완성
             else if(65<=event.keyCode<=90){
@@ -353,6 +404,13 @@
                     var cursor=beforetext.length+1;
                     console.log(beforetext.length+1)
                     $("#Equation").selectRange(cursor,cursor)
+                }
+                else if(event.keyCode===68&&beforetext[beforetext.length-2]==='n'&&beforetext[beforetext.length-3]==='u'&&beforetext[beforetext.length-4]==='o'&&beforetext[beforetext.length-5]==='R'){
+                    $("#Equation").val(beforetext+ "[,]" +aftertext)
+                    var cursor=beforetext.length+1;
+                    console.log(beforetext.length+1)
+                    $("#Equation").selectRange(cursor,cursor)
+
                 }
 
             }
@@ -447,46 +505,17 @@
         console.log(arr)
 
 
-        var find_function; //함수 찾은 자리
-
-        console.log()
-        //영어가 하나라도 있다면
-      var eng_change_arr=new Array() //영어로 바꾸는 배열
-
       if(pattern_eng.test(arr)===true){
           // 앞뒤로 영어면 붙이기
-          for (var eng_all=0;arr.length>eng_all;eng_all++){
-              console.log("hi")
-              if(eng_change_arr.length===0){
-                  eng_change_arr.push(arr[eng_all])
-              }
-              else if(pattern_eng.test(arr[eng_all])===true&&pattern_eng.test(eng_change_arr[eng_change_arr.length-1])===true){
-                  eng_change_arr[eng_change_arr.length-1]=eng_change_arr[eng_change_arr.length-1]+arr[eng_all]
-                  find_function=eng_change_arr.length-1
-                  console.log(eng_change_arr)
-                  console.log(find_function=eng_change_arr.length-1)
-              }
-              //예외 : 숫자+함수
-              else if(((pattern_num.test(eng_change_arr[eng_change_arr.length-1])===true||eng_change_arr[eng_change_arr.length-1]==='('||eng_change_arr[eng_change_arr.length-1]===')' )&& pattern_eng.test(arr[eng_all])===true)||((eng_change_arr[eng_change_arr.length-1])===']'&& (pattern_num.test(arr[eng_all])===true||arr[eng_all]==='('||arr[eng_all]===')'))){
-                  alert("숫자와 함수가 붙을 수 없습니다!")
-                  return false;
-
-              }
-              else{
-                  eng_change_arr.push(arr[eng_all])
-                  console.log(eng_change_arr)
-              }
-          } //EX if, ifs
-          console.log(eng_change_arr)
-          arr=eng_nan_way_find(eng_change_arr)
+          arr=eng_paste(arr)
+          arr=eng_nan_way_find(arr) //함수 계산
           if(arr===false){
               return false;
           }
 
-
-          // arr=nan_eng
       }
-      console.log(arr)
+
+      //함수가 다 계산되고 난 후!
       var add=make_arr(arr);
       var stack_cal=formula(add); //후위 표기식
       var sum=calculation(stack_cal); //계산
@@ -495,6 +524,35 @@
 
   }
 
+    function eng_paste(arr){
+        //영어가 하나라도 있다면
+        var eng_change_arr=new Array() //영어로 바꾸는 배열
+        var find_function; //함수 찾은 자리
+        for (var eng_all=0;arr.length>eng_all;eng_all++){
+            console.log("hi")
+            if(eng_change_arr.length===0){
+                eng_change_arr.push(arr[eng_all])
+            }
+            else if(pattern_eng.test(arr[eng_all])===true&&pattern_eng.test(eng_change_arr[eng_change_arr.length-1])===true){
+                eng_change_arr[eng_change_arr.length-1]=eng_change_arr[eng_change_arr.length-1]+arr[eng_all]
+                find_function=eng_change_arr.length-1
+                console.log(eng_change_arr)
+                console.log(find_function=eng_change_arr.length-1)
+            }
+            //예외 : 숫자+함수
+            else if(((pattern_num.test(eng_change_arr[eng_change_arr.length-1])===true||eng_change_arr[eng_change_arr.length-1]==='('||eng_change_arr[eng_change_arr.length-1]===')' )&& pattern_eng.test(arr[eng_all])===true)||((eng_change_arr[eng_change_arr.length-1])===']'&& (pattern_num.test(arr[eng_all])===true||arr[eng_all]==='('||arr[eng_all]===')'))){
+                alert("숫자와 함수가 붙을 수 없습니다!")
+                return false;
+
+            }
+            else{
+                eng_change_arr.push(arr[eng_all])
+                console.log(eng_change_arr)
+            }
+        }
+        return eng_change_arr
+
+    }
 
 
 
@@ -502,20 +560,11 @@
     function eng_nan_way_find(eng_change_arr) {
         var nan_eng = new Array()
 
-
-        //각도를 위해
-
-
         for (var eng_all = 0; eng_change_arr.length > eng_all; eng_all++) {
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + eng_all)
             add = eng_all
+
+            //if문
             if (eng_change_arr[eng_all] === 'IF' && eng_change_arr[eng_all + 1] === '[') {
-
-
-                console.log(eng_all)
-                console.log(add)
-
-
                 var if_first = new Array();
                 var if_first_compare = new Array();
                 var if_first_before = new Array();
@@ -523,18 +572,14 @@
                 var if_seconde = new Array();
                 var if_third = new Array();
 
-
-                if (pattern_compare.test(eng_change_arr) === false) { //배열전체에서 > = <
+                if (pattern_compare.test(eng_change_arr) === false) { //배열전체에서 > = <이 없다면 ->!!!: <== 같은 부분들 예외처리 해주어야 한다.
                     alert("조건문이 제대로 이루어지지 않았습니다.")
                     return false;
 
                 }
-                //IF[IF[1=1,2,3]=1,5,6]
-                //IF[IF[1+2=3,1,2]=1,3,4]
-                //IF[1=1,3,4]
-                //IF[1=1,IF[1+2=3,1,2],4]
-                //IF[1=1,1,IF[1+2=3,1,2]]
                 add = add + 2// add=add+2//if 랑 [ 지나친 후 계산하기 위함.
+
+                //첫번째 콤마 전의 식을 만들려함.
                 if_first = function_in_function(eng_change_arr, add) //함수가 있다면, 그 함수를 분리하는 과정이다.
                 console.log(if_first)
                 add = if_first.pop()
@@ -1588,7 +1633,7 @@
             <!--<p>*소수점 6번째 이후는 표시되지 않습니다.*</p>-->
         </div>
         <div class="column_right">
-            <input type="text" calss="function_explanation" style="height: 210px; width:190px; border:2px;"disabled/>
+            <input type="text" id="function_explanation" calss="function_explanation" style="height: 210px; width:190px; border:2px;"disabled/>
             <br>
             <button class="btn btn-secondary equals"  value="=" onclick="equals_button()" >=</button>
         </div>
