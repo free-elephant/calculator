@@ -34,65 +34,330 @@
 
     var pattern_compare=/[=><]/;
 
-    var vs_spc;
+    var vs_spc= new Array();
+
+
+
+    $.fn.selectRange = function (start,end){
+        return this.each(function() {
+            if(this.setSelectionRange) {
+                this.focus();
+                this.setSelectionRange(start, end);
+            }
+            else if(this.createTextRange) {
+                var range = this.createTextRange();
+                range.collapse(true);
+                range.moveEnd('character', end);
+                range.moveStart('character', start);
+                range.select();
+            }
+        });
+    };
 
 
 
 
+    // function keydown(){
+    // $('#Equation').keypress(function (event) {
 
-
-
-
-    function keydown(){
+    $(document).on("keydown",'#Equation', function(){
         var num_value_val = new Array()
         var selectPos_s =0
-        var selectPos_e =0
+        // var selectPos_e =0
         var num_value = document.getElementById('Equation');
-        num_value_val = num_value.value.split("");
+        var num_value_value=num_value.value;
+        num_value_val = num_value.value.split(""); //배열
+        console.log(num_value_val)
+        // num_value_val= num_value_val.replace(/(\s*)/g,"")
+        console.log(num_value_val[num_value_val.length-1])
 
         selectPos_s = num_value.selectionStart; //END START 차이
-        selectPos_e = num_value.selectionEnd;
+        // selectPos_e = num_value.selectionEnd;
+        // console.log(num_value_val[selectPos_s])
+        var find_function; //함수 찾은 자리
 
-        var beforetext = num_value.value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
-        var aftertext = num_value.value.substring(num_value.selectionEnd, num_value_val.length);
+        var beforetext = num_value_value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
+        var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
 
-        if(event.keyCode===37){ //LEFT
-            if(num_value_val[selectPos_e]==='+' || num_value_val[selectPos_e]==='-' || num_value_val[selectPos_e]==='*'||num_value_val[selectPos_e]==='/'){
-                $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
+        console.log(beforetext)
+        console.log(aftertext)
+        console.log(num_value_val[num_value_val.length-1])
+        console.log(num_value_val[num_value_val.length-2])
+        console.log(selectPos_s)
+        console.log(num_value_val[selectPos_s]) //left
+        console.log(num_value_val[selectPos_s-1]) //right
+
+
+        var if_before_confirm=0;
+        var if_after_confirm=0;
+        var before_comma=0;
+        var after_comma=0;
+
+        for (var confirm=0; beforetext.length>confirm;confirm++){
+            console.log(beforetext[confirm])
+            if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
+                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                console.log(confirm)
+                console.log(beforetext[confirm])
+                if_before_confirm=2;
+                if(beforetext[beforetext.length-1]===']'){
+                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    if_after_confirm=2;
+                    break;
+
+                }
+                break;
             }
-
             else{
-                $('#Function_description').val("")
-            }
-
-        }
-        else if(event.keyCode==39){ //RIGHT
-            if(num_value_val[selectPos_s-1]==='+' ||num_value_val[selectPos_s]==='-'||num_value_val[selectPos_s]==='*'||num_value_val[selectPos_s]==='/'   ){
-                $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
-            }
-            else{
-                $('#Function_description').val("")
 
             }
 
-
-        }
-        else if(event.keyCode===13) {
-            equals_button()
         }
 
-        else if(event.keyCode===8){
-            // console.log(num_value_val);
-
+        for (var confirm=0; aftertext.length>confirm;confirm++){
+            console.log(beforetext[beforetext.length-1])
+            if(aftertext[confirm]===']'){
+                console.log("hoooooooooooooo")
+                if_after_confirm=2;
+                break;
+            }
         }
-        else if(65<=event.keyCode<=90){
-            if(event.keyCode===70){//f누르면 자동완성되도록
 
-                $("#Equation").val(beforetext+ "[,,]"+aftertext);
+
+
+
+
+         if(if_before_confirm===2&&if_after_confirm===2){ //지우기
+             console.log(beforetext)
+             console.log(beforetext.length-1)
+             console.log(beforetext[beforetext.length-1])
+
+            //함수라는 걸 인식한 다음 이런 부분에 대해서 비교+
+            if(event.keyCode===8) {
+
+
+                for (var confirm=0; beforetext.length>confirm;confirm++){
+                    console.log(beforetext[confirm])
+                    if((beforetext[confirm]!='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]!='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]!='[')){
+                        console.log("!ghdghhgfjlhg!")
+                        console.log(confirm)
+                        console.log(beforetext[confirm])
+                        if_before_confirm=0;
+                        break;
+                    }
+                    else if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')&&beforetext[beforetext.length-1]!=']'){
+                        console.log("00000")
+                        if_after_confirm=0;
+                    }
+
+                }
+                var comma_find_before_variable=0;
+                while(1){
+                    if(beforetext[comma_find_before_variable]===','){
+                        before_comma=before_comma+1
+                        console.log(before_comma)
+                        console.log("hiiiiiiiiiiiiiiiiiiii")
+                    }
+                    else if(comma_find_before_variable===beforetext.length){
+                        console.log("hiiiiiiiiiiiiiiiiiiii")
+                        break;
+                    }
+                    else if(comma_find_before_variable>10){
+                        console.log("hiiiiiiiiiiiiiiiiiiii")
+                        break;
+                    }
+                    comma_find_before_variable++
+                    console.log(comma_find_before_variable)
+                }
+
+                var comma_find_after_variable=0;
+                while(1){
+                    if(aftertext[comma_find_after_variable]===','){
+                        console.log("hiiiiiiiiiiiiiiiiiiii")
+                        after_comma=after_comma+1
+                        console.log(after_comma)
+                    }
+                    else if(comma_find_after_variable===aftertext.length){
+                        console.log("hiiiiiiiiiiiiiiiiiiii")
+                        break;
+                    }
+                    else if(comma_find_after_variable>10){
+                        console.log("hiiiiiiiiiiiiiiiiiiii")
+                        return
+                    }
+                    comma_find_after_variable++
+                    console.log(comma_find_after_variable)
+                }
+                alert("EWW")
+                console.log(before_comma)
+                console.log(after_comma)
+                if(((if_before_confirm===0||if_after_confirm===0)&&(before_comma+after_comma==2))||before_comma+after_comma!=2){
+                    alert("삭제")
+
+                }
+
+            }
+        }
+
+    });
+
+    $(document).on("keyup",'#Equation', function(){
+            var num_value_val = new Array()
+            var selectPos_s =0
+            // var selectPos_e =0
+            var num_value = document.getElementById('Equation');
+            var num_value_value=num_value.value;
+            num_value_val = num_value.value.split(""); //배열
+            console.log(num_value_val)
+            // num_value_val= num_value_val.replace(/(\s*)/g,"")
+            console.log(num_value_val[num_value_val.length-1])
+
+            selectPos_s = num_value.selectionStart; //END START 차이
+            // selectPos_e = num_value.selectionEnd;
+            // console.log(num_value_val[selectPos_s])
+            var find_function; //함수 찾은 자리
+
+            var beforetext = num_value_value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
+            var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
+
+            console.log(beforetext)
+            console.log(aftertext)
+            console.log(num_value_val[num_value_val.length-1])
+            console.log(num_value_val[num_value_val.length-2])
+            console.log(selectPos_s)
+            console.log(num_value_val[selectPos_s]) //left
+            console.log(num_value_val[selectPos_s-1]) //right
+
+
+            var if_before_confirm=0;
+            var if_after_confirm=0;
+            var before_comma=0;
+            var after_comma=0;
+
+
+
+
+
+            for (var confirm=0; beforetext.length>confirm;confirm++){
+                console.log(beforetext[confirm])
+                console.log(beforetext[beforetext.length-1])
+                if((beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&beforetext[confirm+2]==='[')||(beforetext[confirm]==='I'&&beforetext[confirm+1]==='F'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
+                    console.log(beforetext[confirm])
+                    if_before_confirm=2;
+                    if(beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[' && beforetext[beforetext.length-1]===']'){
+                        if_after_confirm=2;
+
+                    }
+                    break;
+                }
+
             }
 
-        }
-    }
+            for (var confirm=0; aftertext.length>confirm;confirm++){
+                if(aftertext[confirm]===']'){
+                    if_after_confirm=2;
+                    break;
+                }
+            }
+
+
+            if(event.keyCode===37){ //LEFT
+                console.log(if_before_confirm)
+                console.log(if_after_confirm)
+
+                if(num_value_val[selectPos_s]==='+' || num_value_val[selectPos_s]==='-' || num_value_val[selectPos_s]==='*'||num_value_val[selectPos_s]==='/'){
+                    $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
+                }
+                else if(if_before_confirm===2&&if_after_confirm===2){
+                    $('#Function_description').val("IF[비교값,참,거젓] 조건값을 구하는 함수입니다.")
+                }
+
+                else{
+                    $('#Function_description').val("")
+                }
+
+            }
+            else if(event.keyCode==39){ //RIGHT
+                if(num_value_val[selectPos_s-1]==='+' ||num_value_val[selectPos_s]==='-'||num_value_val[selectPos_s]==='*'||num_value_val[selectPos_s]==='/'   ){
+                    $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
+                }
+                else{
+                    $('#Function_description').val("")
+
+                }
+
+
+            }
+            else if(event.keyCode===13) {
+                equals_button()
+            }
+
+            // else if(event.keyCode===8){ //지우기
+            //     console.log(beforetext)
+            //     console.log(beforetext.length-1)
+            //     //함수라는 걸 인식한 다음 이런 부분에 대해서 비교+
+            //     if(if_before_confirm===2&&if_after_confirm===2){
+            //         var comma_find_before_variable=0;
+            //         while(1){
+            //             if(beforetext[comma_find_before_variable]===','){
+            //                 before_comma=before_comma+1
+            //                 console.log(before_comma)
+            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
+            //             }
+            //             else if(comma_find_before_variable===beforetext.length){
+            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
+            //                 break;
+            //             }
+            //             else if(comma_find_before_variable>10){
+            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
+            //                 break;
+            //             }
+            //             comma_find_before_variable++
+            //             console.log(comma_find_before_variable)
+            //         }
+            //
+            //         var comma_find_after_variable=0;
+            //         while(1){
+            //             if(aftertext[comma_find_after_variable]===','){
+            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
+            //                 after_comma=after_comma+1
+            //                 console.log(after_comma)
+            //             }
+            //             else if(comma_find_after_variable===aftertext.length){
+            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
+            //                 break;
+            //             }
+            //             else if(comma_find_after_variable>10){
+            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
+            //                 return
+            //             }
+            //             comma_find_after_variable++
+            //             console.log(comma_find_after_variable)
+            //         }
+            //         console.log(before_comma)
+            //         console.log(after_comma)
+            //         if(((if_before_confirm===0||if_after_confirm===0)&&(before_comma+after_comma==2))||before_comma+after_comma!=2){
+            //             alert("삭제")
+            //
+            //         }
+            //
+            //     }
+            //
+            //
+            // }
+
+            //자동완성
+            else if(65<=event.keyCode<=90){
+                if(event.keyCode===70&&beforetext[beforetext.length-2]==='I'){//f누르면 자동완성되도록
+                    $("#Equation").val(beforetext+ "[,,]" +aftertext)
+                    var cursor=beforetext.length+1;
+                    console.log(beforetext.length+1)
+                    $("#Equation").selectRange(cursor,cursor)
+                }
+
+            }
+        });
+
 
     // function function_discripton(){
     // }
@@ -156,10 +421,15 @@
    });
 
 
-
     $(document).on("click",'#round', function(){
         // $('#Equation').val($(this).val());
         $('#Function_description').val("Round[입력값,적용값] 적용값이 양수일 때 소수점 아래에서 반올림, 음수일 경우 정수자리에서 반올림 되도록 합니다.")
+
+    });
+
+    $(document).on("click",'#abs', function(){
+        // $('#Equation').val($(this).val());
+        $('#Function_description').val("ABS[입력값], 입력값만이 존재, 숫자의 절대값을 구합니다.")
 
     });
 
@@ -196,6 +466,12 @@
                   console.log(eng_change_arr)
                   console.log(find_function=eng_change_arr.length-1)
               }
+              //예외 : 숫자+함수
+              else if(((pattern_num.test(eng_change_arr[eng_change_arr.length-1])===true||eng_change_arr[eng_change_arr.length-1]==='('||eng_change_arr[eng_change_arr.length-1]===')' )&& pattern_eng.test(arr[eng_all])===true)||((eng_change_arr[eng_change_arr.length-1])===']'&& (pattern_num.test(arr[eng_all])===true||arr[eng_all]==='('||arr[eng_all]===')'))){
+                  alert("숫자와 함수가 붙을 수 없습니다!")
+                  return false;
+
+              }
               else{
                   eng_change_arr.push(arr[eng_all])
                   console.log(eng_change_arr)
@@ -207,134 +483,362 @@
               return false;
           }
 
+
           // arr=nan_eng
       }
       console.log(arr)
-
-
-
-
-
-
       var add=make_arr(arr);
       var stack_cal=formula(add); //후위 표기식
       var sum=calculation(stack_cal); //계산
       $('#result').val(sum)
       $('#Equation_arrangement').val($('#Equation').val())
 
-
-
-
-
-
   }
-  // );
+
+
+
 
     var add;
-    function eng_nan_way_find(eng_change_arr){
-        var nan_eng=new Array()
-        for (var eng_all=0;eng_change_arr.length>eng_all;eng_all++) {
-            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+eng_all)
-            add=eng_all
-            if (eng_change_arr[eng_all] === 'IF'&&eng_change_arr[eng_all+1] === '[') {
+    function eng_nan_way_find(eng_change_arr) {
+        var nan_eng = new Array()
+
+
+        //각도를 위해
+
+
+        for (var eng_all = 0; eng_change_arr.length > eng_all; eng_all++) {
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + eng_all)
+            add = eng_all
+            if (eng_change_arr[eng_all] === 'IF' && eng_change_arr[eng_all + 1] === '[') {
 
 
                 console.log(eng_all)
                 console.log(add)
 
 
-                var if_first=new Array();
-                var if_first_compare=new Array();
-                var if_first_before=new Array();
-                var if_first_after=new Array();
-                var if_seconde=new Array();
-                var if_third=new Array();
+                var if_first = new Array();
+                var if_first_compare = new Array();
+                var if_first_before = new Array();
+                var if_first_after = new Array();
+                var if_seconde = new Array();
+                var if_third = new Array();
 
 
-
-                if(pattern_compare.test(eng_change_arr)===false){ //배열전체에서 > = <
+                if (pattern_compare.test(eng_change_arr) === false) { //배열전체에서 > = <
                     alert("조건문이 제대로 이루어지지 않았습니다.")
                     return false;
 
                 }
-
                 //IF[IF[1=1,2,3]=1,5,6]
+                //IF[IF[1+2=3,1,2]=1,3,4]
+                //IF[1=1,3,4]
+                //IF[1=1,IF[1+2=3,1,2],4]
+                //IF[1=1,1,IF[1+2=3,1,2]]
+                add = add + 2// add=add+2//if 랑 [ 지나친 후 계산하기 위함.
+                if_first = function_in_function(eng_change_arr, add) //함수가 있다면, 그 함수를 분리하는 과정이다.
+                console.log(if_first)
+                add = if_first.pop()
+                console.log(add)
+                console.log(eng_change_arr[add])
 
-
-
-                if_first=function_in_function(eng_change_arr,add)
-
-
-                if_first_compare=if_first
-                if_first=if_comapare(if_first)
+                if_first_compare = if_first
+                if_first = if_comapare(if_first) //조건문이기 때문에 비교하는 것./...
                 console.log(if_first)
                 //false 리턴 경우
-                if(if_first===false){
+                if (typeof if_first === "undefined") {
                     return false;
                 }
-                if_first_before=if_first[0]
-                if_first_after=if_first[1]
+                if_first_before = if_first[0]
+                if_first_after = if_first[1]
 
-                add=add+1
-                while(1){
-                    if(eng_change_arr[add]===','){
-                        break;
-                    }
-                    if_seconde.push(eng_change_arr[add])
-                    add++;
-                    console.log(if_seconde)
-                }
-                if_seconde=eng_cal(if_seconde)
 
+                add = add + 1
+                console.log(eng_change_arr[add])
+
+
+                if_seconde = function_in_function(eng_change_arr, add); // 함수가 있냐 없냐에 따라 만들어 오는 것!\
+                add = if_seconde.pop()
+                if_seconde = eng_cal(if_seconde);
+                console.log(if_seconde)
                 //false 리턴 경우
-                if(if_seconde===false){
+                if (typeof if_seconde === "undefined") {
+                    console.log("!!!!")
                     return false;
+
                 }
-                add=add+1
+                add = add + 1
                 console.log(add)
-                while(1){
-                    if(eng_change_arr[add]===']'){
-                        break;
-                    }
-                    if_third.push(eng_change_arr[add])
-                    add++;
-                    console.log()
-                }
-                if_third=eng_cal(if_third)
 
+
+                if_third = function_in_function(eng_change_arr, add); // 함수가 있냐 없냐에 따라 만들어 오는 것!\
+                add = if_third.pop()
+                if_third = eng_cal(if_third);
+                console.log(if_third)
                 //false 리턴 경우
-                if(if_third===false){
+                if (typeof if_third === "undefined") {
                     return false;
                 }
-                eng_all=add
+                eng_all = add
                 console.log(nan_eng)
                 console.log(if_first_compare)
-                console.log(if_first_compare[vs_spc])
+                console.log(vs_spc)
                 console.log(if_first_before)
                 console.log(if_first_after)
-                if(if_first_compare[vs_spc]==='='){
-                    if(if_first_before===if_first_after){
+
+
+                if (if_first_compare[vs_spc[vs_spc.length - 1]] === '=') {
+                    if (if_first_before === if_first_after) {
                         nan_eng.push(if_seconde)
                         console.log(nan_eng)
                     }
-                    else{
+                    else {
                         nan_eng.push(if_third)
                         console.log(nan_eng)
                     }
+                    vs_spc.pop()
+                }
+                else if (if_first_compare[vs_spc[vs_spc.length - 1]] === '<') {
+                    if (if_first_before < if_first_after) {
+                        nan_eng.push(if_seconde)
+                        console.log(nan_eng)
+                    }
+                    else {
+                        nan_eng.push(if_third)
+                        console.log(nan_eng)
+                    }
+                    vs_spc.pop()
+                }
+                else if (if_first_compare[vs_spc[vs_spc.length - 1]] === '>') {
+                    if (if_first_before > if_first_after) {
+                        nan_eng.push(if_seconde)
+                        console.log(nan_eng)
+                    }
+                    else {
+                        nan_eng.push(if_third)
+                        console.log(nan_eng)
+                    }
+                    vs_spc.pop()
+                }
+                else if (if_first_compare[vs_spc[vs_spc.length - 1]] === '>=') {
+                    if (if_first_before >= if_first_after) {
+                        nan_eng.push(if_seconde)
+                        console.log(nan_eng)
+                    }
+                    else {
+                        nan_eng.push(if_third)
+                        console.log(nan_eng)
+                    }
+                    vs_spc.pop()
+                }
+                else if (if_first_compare[vs_spc[vs_spc.length - 1]] === '<=') {
+                    if (if_first_before <= if_first_after) {
+                        nan_eng.push(if_seconde)
+                        console.log(nan_eng)
+                    }
+                    else {
+                        nan_eng.push(if_third)
+                        console.log(nan_eng)
+                    }
+                    vs_spc.pop()
+                }
+            }
+            else if (eng_change_arr[eng_all] === 'Round' && eng_change_arr[eng_all + 1] === '[') {
+                var round_num = new Array()
+                var round_range = new Array()
+                add = add + 2
+                round_num = function_in_function(eng_change_arr, add)
+                add = round_num.pop()
+                round_num = eng_cal(round_num);
+                console.log(round_num)
+
+
+                add = add + 1
+                round_range = function_in_function(eng_change_arr, add)
+                add = round_range.pop()
+                round_range = eng_cal(round_range);
+                console.log(round_range)
+                eng_all = add
+
+                if (round_range > 0) {
+                    nan_eng.push(round_num.toFixed(round_range))
+                    if (round_range >= 15) {
+                        alert("소수점 15번째 이상은 계산할 수 없습니다.")
+                        return false;
+                    }
+                }
+                else if (round_range < 0) {
+                    var ten_mul = 0;
+                    round_range = Math.abs(round_range)
+                    console.log(typeof(round_range))
+                    ten_mul = Math.pow(10, round_range)
+                    console.log(ten_mul)
+                    nan_eng.push(Math.round(round_num / ten_mul) * ten_mul)
+                    if (round_range <= -15) {
+                        alert("15 이상은 반올림 할 수 없습니다.")
+                        return false;
+                    }
+                }
+                else {
+                    nan_eng.push(round_num)
                 }
 
+                // console.log(round_num.toFixed(round_range))
             }
+
+            else if (eng_change_arr[eng_all] === 'ABS' && eng_change_arr[eng_all + 1] === '[') {
+                var abs = new Array()
+                add = add + 2
+
+                abs = function_in_function(eng_change_arr, add)
+                add = abs.pop()
+                abs = eng_cal(abs);
+
+                abs = Math.abs(abs)
+                nan_eng.push(abs)
+
+                eng_all = add // for문을 끝내기 위해서
+            }
+
+            else if (eng_change_arr[eng_all] === 'LOG' && eng_change_arr[eng_all + 1] === '[') {
+                var log_launching = new Array()
+                var log_base = new Array()
+                add = add + 2
+
+                log_launching = function_in_function(eng_change_arr, add)
+                add = log_launching.pop()
+                log_launching = eng_cal(log_launching);
+
+                //log_launching 진수에는 음수가 들어갈 수 없음
+                if (log_launching < 0) {
+                    alert("진수에는 음수가 들어갈 수 없습니다.")
+                    return false;
+                }
+
+                add = add + 1
+
+                log_base = function_in_function(eng_change_arr, add)
+                add = log_base.pop()
+                log_base = eng_cal(log_base);
+
+                if (log_base < 0 || log_base === 0 | log_base === 1) {
+                    alert(log_base + "에서 오류가 발생했습니다! " + "Base에는 음수,0,1dl 들어갈 수 없습니다.")
+                    return false;
+                }
+
+                nan_eng.push(Math.log(log_launching) / Math.log(log_base))
+                eng_all = add // for문을 끝내기 위해서
+
+            }
+
+            else if (eng_change_arr[eng_all] === 'ROOT' && eng_change_arr[eng_all + 1] === '[') {
+                var root = new Array()
+                add = add + 2
+
+                root = function_in_function(eng_change_arr, add)
+                add = root.pop()
+                root = eng_cal(root);
+
+                if (root < 0) {
+                    alert("루트에는 음수가 들어갈 수 없습니다.")
+                    return false;
+                }
+
+                nan_eng.push(Math.sqrt(root))
+                eng_all = add // for문을 끝내기 위해서
+
+            }
+
+
+            else if ((eng_change_arr[eng_all] === 'SIN' || eng_change_arr[eng_all] === 'COS' || eng_change_arr[eng_all] === 'TAN') && eng_change_arr[eng_all + 1] === '[') {
+                var radians = new Array()
+                add = add + 2
+                radians = function_in_function(eng_change_arr, add)
+                add = radians.pop()
+                radians = eng_cal(radians);
+                radians = radians * Math.PI / 180
+
+                if (eng_change_arr[eng_all] === 'SIN' && eng_change_arr[eng_all + 1] === '[') {
+                    nan_eng.push(Math.sin(radians).toFixed(6))
+                }
+                else if (eng_change_arr[eng_all] === 'COS' && eng_change_arr[eng_all + 1] === '[') {
+                    nan_eng.push(Math.cos(radians).toFixed(6))
+                }
+                else if (eng_change_arr[eng_all] === 'TAN' && eng_change_arr[eng_all + 1] === '[') {
+                    nan_eng.push(Math.tan(radians).toFixed(6))
+                }
+                eng_all = add // for문을 끝내기 위해서
+            }
+
+            else if ((eng_change_arr[eng_all] === 'ACOS' || eng_change_arr[eng_all] === 'ASIN' || eng_change_arr[eng_all] === 'ATAN') && eng_change_arr[eng_all + 1] === '[') {
+                var angle = new Array()
+                add = add + 2
+                angle = function_in_function(eng_change_arr, add)
+                add = angle.pop()
+                angle = eng_cal(angle);
+                console.log(angle+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!WRWFG")
+                console.log(eng_change_arr[eng_all])
+                if (eng_change_arr[eng_all] === 'ASIN' && eng_change_arr[eng_all + 1] === '[') {
+                    // angle = Number(angle)
+                    if (-1 <= angle <= 1) {
+                        angle=Math.asin(angle)
+                        if(isNaN(angle)===true){
+                            alert("ASIN[입력값]에서 입력값은 -1에서 1 사이의 값이 들어가야 합니다.")
+                            return false;
+                        }
+                        else{
+                            nan_eng.push(angle.toFixed(6))
+
+                        }
+                    }
+                    // else{ //Q.아니 이건 왜 안되는고ㅓ지?????????????????
+                    //     console.log("@@@@@@@@")
+                    //     console.log("FDAFGfdgdfgdsfgdddgf")
+                    //     alert("ASIN[입력값]에서 입력값은 -1에서 1 사이의 값이 들어가야 합니다.")
+                    //     return false;
+                    // }
+                    console.log("FDAFGfdgdfgdsfgdddgf")
+
+                }
+                else if (eng_change_arr[eng_all] === 'ACOS' && eng_change_arr[eng_all + 1] === '[') {
+                    angle = Number(angle)
+                    if (-1 < angle < 1) {
+                        nan_eng.push(Math.acos(angle).toFixed(6))
+                    }
+                    else {
+                        alert("ACOS[입력값]에서 입력값은 -1에서 1 사이의 값이 들어가야 합니다.")
+                        return false;
+                    }
+                }
+                else if (eng_change_arr[eng_all] === 'ATAN' && eng_change_arr[eng_all + 1] === '[') {
+                    nan_eng.push(Math.atan(angle).toFixed(6))
+                }
+                eng_all = add // for문을 끝내기 위해서
+
+            }
+
+
+
+
+
+
+
+            else if(pattern_eng.test(eng_change_arr[eng_all])===true&&(eng_change_arr[eng_all]!='Round'||eng_change_arr[eng_all]!='IF')){
+                alert(eng_change_arr[eng_all]+"함수의 이름이 잘못되었습니다")
+                return false;
+
+            }
+
             else{
-                nan_eng.push(eng_change_arr[eng_all])
+                nan_eng.push(eng_change_arr[eng_all]) //함수 외의 부분은 더해주디
                 console.log(nan_eng)
             }
         }
         return nan_eng
     }
 
+
     function function_in_function(eng_change_arr,add) {
-        //또 안에 함수인지 아닌지 검사해봐야 할 필요가 있음
-        add=add+2//if 랑 [ 지나친 후 계산하기 위함.
+        //또 안에 함수인지 아닌지 검사해봐야 할 필요가 있음 + 첫번째 부분 분리시키는 것이다.
         console.log(add)
         var add_1=add-1
         var first=new Array();
@@ -353,10 +857,13 @@
                         console.log(eng_change_arr[add_eng])
                     }
                     else if(eng_change_arr[add_eng]===']'){
-                        close_square_bracket=close_square_bracket+1
                         console.log(eng_change_arr[add_eng])
+                        if((eng_change_arr[add_eng-1]===']' || eng_change_arr[add_eng]===']')&& close_square_bracket===open_square_bracket ){
+                            break;
+                        }
+                        close_square_bracket=close_square_bracket+1
                     }
-                    else if(eng_change_arr[add_eng-1]===']'&& close_square_bracket===open_square_bracket){
+                    else if((eng_change_arr[add_eng-1]===']'||eng_change_arr[add_eng-1]===')'||pattern_num.test(eng_change_arr[add_eng-1])===true)&& close_square_bracket===open_square_bracket){
                         console.log(eng_change_arr[add_eng])
                         break;
                     }
@@ -365,11 +872,14 @@
                     add_eng++
 
                 }
-                first=eng_nan_way_find(first)
+                first=eng_nan_way_find(first) // 함수면 여기로 들어가!
+                console.log(first)
                 add_1=add_eng-1
                 add=add_eng
             }
-            else if((eng_change_arr[add_1]===']' || eng_change_arr[add_1]===')'||pattern_num.test(eng_change_arr[add_1])===true)&&eng_change_arr[add]===','){
+            //(eng_change_arr[add_1]===']' || eng_change_arr[add_1]===')'||pattern_num.test(eng_change_arr[add_1])===true ||pattern_spc_minus.test(eng_change_arr[add_1])===true)&&
+            else if((eng_change_arr[add_1]===']' || eng_change_arr[add_1]===')'||pattern_num.test(eng_change_arr[add_1])===true ||pattern_spc_minus.test(eng_change_arr[add_1])===true)&&(eng_change_arr[add]===',' || eng_change_arr[add]===']')){
+                console.log("hoooooooooooooooooooo")
                 break;
             }
             else{
@@ -380,6 +890,9 @@
                 console.log(first)
             }
         }
+        //add 수도 보내야 함
+        first.push(add)
+        console.log(first)
         return first
 
     }
@@ -396,9 +909,9 @@
         }
         else{
             while(1){
-                if(if_first[before_devide]==='='){
-                    vs_spc=before_devide
-
+                if(if_first[before_devide]==='='||if_first[before_devide]==='>'||if_first[before_devide]==='<'||if_first[before_devide]==='>='||if_first[before_devide]==='<='){
+                    vs_spc[vs_spc.length]=before_devide
+                    console.log(vs_spc)
                     break;
                 }
                 if_first_before.push(if_first[before_devide])
@@ -433,16 +946,37 @@
 
         if(pattern_eng.test(eng_in_cal)){
             eng_in_cal=eng_nan_way_find(eng_in_cal)
+            if( eng_in_cal===false){
+                return false;
+            }
             eng_in_cal=make_arr(eng_in_cal);
+            if( eng_in_cal===false){
+                return false;
+            }
             eng_in_cal=formula(eng_in_cal); //후위 표기식
+            if( eng_in_cal===false){
+                return false;
+            }
             eng_in_cal=calculation(eng_in_cal); //계산
+            if( eng_in_cal===false){
+                return false;
+            }
             return eng_in_cal
 
         }
         else{
             eng_in_cal=make_arr(eng_in_cal);
+            if( eng_in_cal===false){
+                return false;
+            }
             eng_in_cal=formula(eng_in_cal); //후위 표기식
+            if( eng_in_cal===false){
+                return false;
+            }
             eng_in_cal=calculation(eng_in_cal); //계산
+            if( eng_in_cal===false){
+                return false;
+            }
             return eng_in_cal
 
         }
@@ -478,7 +1012,7 @@
         var before_arr= new Array()
         // arr.replace(,"") ; //공백제거
 
-
+        var decimal_point = 1;
 
         for (var ad = 0; arr.length>ad; ad++) {
             var ad_a=ad+1
@@ -505,7 +1039,7 @@
                 exception_nan_num = 77; //77로 바뀌어서,! 연산자 없을 때의 식의 예외처리를 해주기 위함
             }
 
-            if(arr[ad]==='='){
+            if(arr[ad]==='=' || arr[ad]==='>' || arr[ad]==='<' ||arr[ad]==='>='||arr[ad]==='<='){
                 alert(arr[ad]+"에서 오류가 발생했습니다. "+"=은 입력할 수 없는 문자열입니다.")
                 return false;
             }
@@ -525,12 +1059,13 @@
                 if (pattern_num.test(add[add.length - 1]) === true && pattern_num.test(arr[ad]) === true) { //string으로 되어 있으니 붙일 수 있었음...
 
                     if(pattern_only_dot.test((add[add.length - 1]))===true){
-                        if(add[add.length - 1].length>7) {
-                            alert("소수점 7번째 이상은 계산할 수 없습니다.")
+                        if( decimal_point>15) {
+                            alert("소수점 15번째 이상은 계산할 수 없습니다.(현재 "+decimal_point+"자리")
                             return false;
                         }
                         else{
                             add[add.length - 1] = (add[add.length - 1] + arr[ad]);
+                            decimal_point=decimal_point+1
 
                         }
 
@@ -628,17 +1163,18 @@
 
                     //-( 이것이 -1*(이라고 바꾸어주기
                     else if(add[add.length - 1]==='-'&&arr[ad]==='('){
-                        if(pattern_minus_and_f_bracket_change_plus_nan_plus.test(add[add.length - 2])===true){
-                            add[add.length - 1]='-1'
-                            add.push('*')
-                            add.push(arr[ad])
-                        }
-                        else {
+                        if(add[add.length - 2]===')' || pattern_num.test(add[add.length - 2])===true || pattern_only_dot.test(add[add.length - 2])===true ){
                             add[add.length - 1] = '+'
                             add.push('-1')
                             add.push('*')
                             add.push(arr[ad])
                             console.log("11")
+                        }
+                        //(pattern_minus_and_f_bracket_change_plus_nan_plus.test(add[add.length - 2])===true)
+                        else{
+                            add[add.length - 1]='-1'
+                            add.push('*')
+                            add.push(arr[ad])
                         }
 
                     }
@@ -736,30 +1272,30 @@
         //예외처리 및 실행
         if (add[0]==='*' || add[0]==='/' ||add[0]==='='||arr[0]==='.'||add[0]==='+'){ //첫 시작 연산자
             alert("연산자로 시작할 수 없습니다.");
-            return
+            return false
         }
 
         else if(nan_num===2){
             alert("값이 입력되지 않았습니다.")
-            return
+            return false
         }
 
         //괄호의 짝이 안맞을 경우
         else if(bracket_f_score!=bracket_b_score){
             alert("괄호의 개수가 맞지 않습니다!")
-            return
+            return false
         }
 
 
         else if(exception_nan_num===2){
             alert("계산할 수 있는 연산자가 없습니다.")
-            return
+            return false
         }
 
         //마지막 글자가 괄호를 제외한 기호인경\
         else if((add[add.length-1]!='(' && add[add.length-1]!=')')&&(pattern_spc_nan_dot.test(add[add.length-1])===true||add[add.length-1]==='-'||add[add.length-1]==='.')){
             console.log(add[add.length-1]);
-            alert("마지막에 기호가 올 수 없습니다.")
+            alert("마지막에 기호("+add[add.length-1]+")가 올 수 없습니다.")
             return false
         }
         else {
@@ -900,19 +1436,19 @@
                    console.log(num1);
                    if(stack_cal[variable]==='+'){ //이렇게 일일이 하는 것이 아니라 계산해주는 함수도 있을까?
                        cal_sum=(Number(num1))+(Number(num2));
-                       cal_sum=cal_sum.toFixed(6)
+                       cal_sum=cal_sum.toFixed(15)
                        sum_cal.push(cal_sum);
                        console.log(sum_cal);
                    }
                    else if(stack_cal[variable]==='-'){
                        cal_sum=Number(num1)-Number(num2);
-                       cal_sum=cal_sum.toFixed(6)
+                       cal_sum=cal_sum.toFixed(15)
                        sum_cal.push(cal_sum);
                        console.log(sum_cal);
                    }
                    else if(stack_cal[variable]==='*'){
                        cal_sum=Number(num1)*Number(num2);
-                       cal_sum=cal_sum.toFixed(6)
+                       cal_sum=cal_sum.toFixed(15)
                        sum_cal.push(cal_sum);
                        console.log(sum_cal);
                    }
@@ -923,7 +1459,7 @@
                        }
                        else{
                            cal_sum=Number(num1)/Number(num2);
-                           cal_sum=cal_sum.toFixed(6)
+                           cal_sum=cal_sum.toFixed(15)
                            sum_cal.push(cal_sum);
                            console.log(sum_cal);
                        }
@@ -935,7 +1471,7 @@
                        }
                        else{
                            cal_sum=Number(num1)%Number(num2);
-                           cal_sum=cal_sum.toFixed(6)
+                           cal_sum=cal_sum.toFixed(15)
                            sum_cal.push(cal_sum);
                            console.log(sum_cal);
                        }
@@ -1016,7 +1552,8 @@
         <div class="row">
             <p class="explanation">수식 입력</p>
             <div class="col-11">
-                <input type="text" id="Equation" class="equation" value="" style="width:100%; height:35px;" onkeyup="keydown()" />
+                <input type="text" id="Equation" class="equation" value="" name="cur" style="width:100%; height:35px;"  />
+                <!--onkeyup="keydown()"-->
                 <!--onclick="onklick_event()"-->
             </div>
         </div>
@@ -1030,25 +1567,25 @@
             <button class="btn-sm btn-dark cal" id="Remainder" value="%">%</button>
             <button class="btn-sm btn-dark cal" id="bracket_f"  value="(">(</button>
             <button class="btn-sm btn-dark cal" id="bracket_f"  value=")">)</button>
-            <button class="btn-sm btn-dark function" id="sin" value="">SIN</button>
-            <button class="btn-sm btn-dark function" id="cos" value="">COS</button>
-            <button class="btn-sm btn-dark function" id="tan" value="">TAN</button>
-            <button class="btn-sm btn-dark function" id="asin" value="">ASIN</button>
-            <button class="btn-sm btn-dark function" id="acos" value="">ACOS</button>
-            <button class="btn-sm btn-dark function" id="atan" value="">ATAN</button>
-            <button class="btn-sm btn-dark function" id="abs" value="">ABS</button>
-            <button class="btn-sm btn-dark function" id="root" value="">Root</button>
+            <button class="btn-sm btn-dark cal function" id="sin" value="SIN[]">SIN</button>
+            <button class="btn-sm btn-dark cal function" id="cos" value="COS[]">COS</button>
+            <button class="btn-sm btn-dark cal function" id="tan" value="TAN[]">TAN</button>
+            <button class="btn-sm btn-dark cal function" id="asin" value="ASIN[]">ASIN</button>
+            <button class="btn-sm btn-dark cal function" id="acos" value="ACOS[]">ACOS</button>
+            <button class="btn-sm btn-dark cal function" id="atan" value="ATAN[]">ATAN</button>
+            <button class="btn-sm btn-dark cal function" id="abs" value="ABS[]">ABS</button>
+            <button class="btn-sm btn-dark cal function" id="root" value="ROOT[]">Root</button>
             <button class="btn-sm btn-dark cal function" id="round" value="Round[,]">Round</button>
-            <button class="btn-sm btn-dark function" id="log" value="">LOG</button>
+            <button class="btn-sm btn-dark cal function" id="log" value="LOG[,]">LOG</button>
             <button class="btn-sm btn-dark cal function" id="if" value="IF[,,]">IF</button>
-            <button class="btn-sm btn-dark function" id="if" value="">!</button>
+            <button class="btn-sm btn-dark cal function" id="if" value="">!</button>
             <button class="btn-sm btn-dark init"  value="c">Clear</button>
             <br>
             <p class="explanation Equation">계산할 수식</p>
             <input type="text" id="Equation_arrangement" value="" style="width:98%; height:35px;" disabled/>
             <p class="explanation result">결과값</p>
             <input type="text" id="result" value="" style="width:98%; height:35px;" disabled/>
-            <p>*소수점 6번째 이후는 표시되지 않습니다.*</p>
+            <!--<p>*소수점 6번째 이후는 표시되지 않습니다.*</p>-->
         </div>
         <div class="column_right">
             <input type="text" calss="function_explanation" style="height: 210px; width:190px; border:2px;"disabled/>
