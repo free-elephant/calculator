@@ -224,38 +224,168 @@
     // }
 
 
+    ////////////////////////////
+    // var num_value_val_keydown = new Array()
+    // $(document).on("keydown",'#Equation', function(){
+    //
+    //     var selectPos_s =0
+    //     // var selectPos_e =0
+    //     var num_value = document.getElementById('Equation');
+    //     var num_value_value=num_value.value;
+    //     num_value_val_keydown = num_value.value.split(""); //배열
+    //
+    //     selectPos_s = num_value.selectionStart; //END START 차이
+    //     var num_value_val_eng=eng_paste(num_value_val_keydown)
+    //
+    //     var beforetext = num_value_value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
+    //     var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
+    //     beforetext =eng_paste( beforetext )
+    //     aftertext =eng_paste( aftertext )
+    //     console.log(beforetext)
+    //     console.log(aftertext)
+    //
+    //     var if_before_confirm=0;
+    //     var if_after_confirm=0;
+    //     var before_comma=0;
+    //     var after_comma=0;
+    //
+    //     var round_before_confirm=0;
+    //     var round_after_confirm=0;
+    //
+    //     var before_bracket=0;
+    //     var after_bracket=0;
+    //
+    //     var b_confirm = 0;
+    //     for (var confirm=0; num_value_val_eng.length>confirm;confirm++){
+    //         console.log(beforetext[beforetext.length - confirm - 1])
+    //         if (beforetext[beforetext.length - confirm - 1] === ']') {
+    //             var before_a = 0;
+    //             while (1) {
+    //                 if (beforetext[beforetext.length - confirm - 2 - before_a] === '[') {
+    //                     before_a = beforetext.length - confirm - 2  - before_a
+    //                     console.log( before_a )
+    //                     break;
+    //                 }
+    //                 before_a++
+    //
+    //             }
+    //             confirm = before_a + 2
+    //         }
+    //         console.log("out")
+    //         if (beforetext[beforetext.length - confirm - 1] === '[') {
+    //             console.log("@2")
+    //             if (beforetext[beforetext.length - confirm - 2] === 'IF') {
+    //                 console.log("@2")
+    //                 if_before_confirm = 2;
+    //                 console.log("444444444444444")
+    //                 console.log(beforetext[beforetext.length-1])
+    //                 if(beforetext[beforetext.length-1]===']'){
+    //                     if_after_confirm = 2;
+    //
+    //                 }
+    //                 break;
+    //
+    //             }
+    //             else if (beforetext[beforetext.length - confirm - 2] === 'Round') {
+    //                 console.log("@2")
+    //                 round_before_confirm = 2;
+    //                 break;
+    //             }
+    //         }
+    //         else if((beforetext[beforetext.length - confirm - 1] === 'IF' && aftertext[0]==='[')
+    //             ||(beforetext[beforetext.length - confirm - 1] === 'I' && aftertext[0]==='F'&& aftertext[1]==='[')){
+    //             if_before_confirm = 2;
+    //             break;
+    //         }
+    //         else if((beforetext[beforetext.length - confirm - 1] === 'Round' && aftertext[0]==='[')
+    //             ||(beforetext[beforetext.length - confirm - 1] === 'R' && aftertext[0]==='ound'&&aftertext[1]==='[')
+    //             ||(beforetext[beforetext.length - confirm - 1] === 'Ro' && aftertext[0]==='und'&&aftertext[1]==='[')
+    //             ||(beforetext[beforetext.length - confirm - 1] === 'Rou' && aftertext[0]==='nd'&&aftertext[1]==='[')
+    //             ||(beforetext[beforetext.length - confirm - 1] === 'Roun' && aftertext[0]==='d'&&aftertext[1]==='[')
+    //         ){
+    //             round_before_confirm = 2;
+    //             break;
+    //         }
+    //     }
+    //
+    //
+    //     for (var confirm = 0; aftertext.length > confirm; confirm++) {
+    //         if (aftertext[confirm] === ']') {
+    //             if_after_confirm = 2;
+    //             round_after_confirm = 2;
+    //
+    //         }
+    //     }
+    //
+    //     if(event.keyCode===8) { //LEFT
+    //         console.log("TTTTTTTTTTTTTTTTTT")
+    //         console.log(if_after_confirm)
+    //         console.log(num_value_val_keydown[selectPos_s-1])
+    //         if(if_before_confirm===2&&if_after_confirm===2&&(num_value_val_keydown[selectPos_s-1]===']'||num_value_val_keydown[selectPos_s-1]===','||num_value_val_keydown[selectPos_s-1]==='['
+    //             ||num_value_val_keydown[selectPos_s-1]==='F' || num_value_val_keydown[selectPos_s-1]==='I')){
+    //             console.log("TTTTTTTTTTTTTTTTTT")
+    //             console.log(typeof(beforetext))
+    //             console.log(beforetext[1])
+    //             var remove_fun=0;
+    //             while(1){
+    //                 if(beforetext[beforetext.length-remove_fun-1]==='['){
+    //                     var find_end_bracket=0;
+    //                     remove_fun=beforetext.length-remove_fun
+    //                     num_value_val_keydown.splice(remove_fun-1,1)
+    //                     num_value_val_keydown.splice(remove_fun-1,1)
+    //                     console.log(beforetext)
+    //                     find_end_bracket=remove_fun-1
+    //                     console.log(find_end_bracket)
+    //                     while(1){
+    //                         if( num_value_val_keydown[find_end_bracket]===']'){
+    //                             num_value_val_keydown.splice(find_end_bracket,1)
+    //                             console.log( num_value_val_keydown)
+    //                             break;
+    //                         }
+    //                         num_value_val_keydown.splice(find_end_bracket,1)
+    //                         console.log( num_value_val_keydown)
+    //                     }
+    //                     break;
+    //                 }
+    //                 else if(aftertext[aftertext.length+remove_fun]==='['){
+    //                     var find_end_bracket=0;
+    //                     remove_fun=aftertext.length+remove_fun
+    //                     num_value_val_keydown.splice(remove_fun-1,1)
+    //                     num_value_val_keydown.splice(remove_fun-1,1)
+    //                     console.log(beforetext)
+    //                     find_end_bracket=remove_fun-1
+    //                     console.log(find_end_bracket)
+    //
+    //
+    //                 }
+    //                 remove_fun++
+    //             }
+    //             console.log(num_value_val_keydown)
+    //             $("#Equation").val(num_value_val_keydown)
+    //         }
+    //     }
+    //
+    //
+    // });
 
 
     $(document).on("keyup",'#Equation', function(){
+        // $('#Equation').on("keyup", function(){
             var num_value_val = new Array()
             var selectPos_s =0
             // var selectPos_e =0
             var num_value = document.getElementById('Equation');
             var num_value_value=num_value.value;
             num_value_val = num_value.value.split(""); //배열
-            console.log(num_value_val)
-            // num_value_val= num_value_val.replace(/(\s*)/g,"")
-            console.log(num_value_val[num_value_val.length-1])
 
             selectPos_s = num_value.selectionStart; //END START 차이
-            // selectPos_e = num_value.selectionEnd;
-            // console.log(num_value_val[selectPos_s])
 
-
-
+            var num_value_val_eng=eng_paste(num_value_val)
 
             var beforetext = num_value_value.substring(0, selectPos_s);  // 기존텍스트 ~ 커서시작점 까지의 문자
             var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
             beforetext =eng_paste( beforetext )
             aftertext =eng_paste( aftertext )
-            console.log(beforetext)
-            console.log(aftertext)
-            console.log(num_value_val[num_value_val.length-1])
-            console.log(num_value_val[num_value_val.length-2])
-            console.log(selectPos_s)
-            console.log(num_value_val[selectPos_s]) //left
-            console.log(num_value_val[selectPos_s-1]) //right
-
 
             var if_before_confirm=0;
             var if_after_confirm=0;
@@ -265,50 +395,76 @@
             var round_before_confirm=0;
             var round_after_confirm=0;
 
+            var before_bracket=0;
+            var after_bracket=0;
 
+        console.log(beforetext[beforetext.length-1])
+        console.log( aftertext[0])
+        if(pattern_eng.test(num_value_val)===true ) {
+            var b_confirm = 0;
+            for (var confirm=0; num_value_val_eng.length>confirm;confirm++){
+                console.log(beforetext[beforetext.length - confirm - 1])
+                if (beforetext[beforetext.length - confirm - 1] === ']') {
+                    var before_a = 0;
+                    while (1) {
+                        if (beforetext[beforetext.length - confirm - 2 - before_a] === '[') {
+                            before_a = beforetext.length - confirm - 2  - before_a
+                            console.log( before_a )
+                            break;
+                        }
+                        before_a++
 
+                    }
+                    confirm = before_a + 2
+                }
+                console.log("out")
+                if (beforetext[beforetext.length - confirm - 1] === '[') {
+                    console.log("@2")
+                    if (beforetext[beforetext.length - confirm - 2] === 'IF') {
+                        console.log("@2")
+                        if_before_confirm = 2;
+                        break;
 
-
-            for (var confirm=0; beforetext.length>confirm;confirm++){
-                console.log(beforetext[confirm])
-                console.log(beforetext[beforetext.length-1])
-                else if((beforetext[confirm]==='IF'&&beforetext[confirm+1]==='[')||(beforetext[confirm]==='IF'&&aftertext[0]==='[')|| (beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[')){
-                    console.log(beforetext[confirm])
-                    if_before_confirm=2;
-                    // if(beforetext[confirm]==='I'&&aftertext[0]==='F'&&aftertext[1]==='[' && beforetext[beforetext.length-1]===']'){
-                    //     if_after_confirm=2;
-                    //
-                    // }
+                    }
+                    else if (beforetext[beforetext.length - confirm - 2] === 'Round') {
+                        console.log("@2")
+                        round_before_confirm = 2;
+                        break;
+                    }
+                }
+                else if((beforetext[beforetext.length - confirm - 1] === 'IF' && aftertext[0]==='[')
+                ||(beforetext[beforetext.length - confirm - 1] === 'I' && aftertext[0]==='F'&& aftertext[1]==='[')){
+                    if_before_confirm = 2;
                     break;
                 }
-                else if((beforetext[confirm]==='Round'&&beforetext[confirm+1]==='[')||(beforetext[confirm]==='Round'&&aftertext[0]==='[')||(beforetext[confirm]==='Roun'&&aftertext[0]==='d'&&aftertext[1]==='[')
-                ||(beforetext[confirm]==='Rou'&&aftertext[0]==='nd'&&aftertext[1]==='[')
-                ||(beforetext[confirm]==='Ro'&&aftertext[0]==='und'&&aftertext[1]==='[')
-                ||(beforetext[confirm]==='R'&&aftertext[0]==='ound'&&aftertext[1]==='[')){
-                    console.log(beforetext[confirm])
-                    round_before_confirm=2;
+                else if((beforetext[beforetext.length - confirm - 1] === 'Round' && aftertext[0]==='[')
+                ||(beforetext[beforetext.length - confirm - 1] === 'R' && aftertext[0]==='ound'&&aftertext[1]==='[')
+                ||(beforetext[beforetext.length - confirm - 1] === 'Ro' && aftertext[0]==='und'&&aftertext[1]==='[')
+                ||(beforetext[beforetext.length - confirm - 1] === 'Rou' && aftertext[0]==='nd'&&aftertext[1]==='[')
+                ||(beforetext[beforetext.length - confirm - 1] === 'Roun' && aftertext[0]==='d'&&aftertext[1]==='[')
+                ){
+                    round_before_confirm = 2;
                     break;
                 }
-
-
             }
-            for (var confirm=0; aftertext.length>confirm;confirm++){
-                if(aftertext[confirm]===']'){
-                    if_after_confirm=2;
-                    round_after_confirm=2;
-                    break;
+
+
+            for (var confirm = 0; aftertext.length > confirm; confirm++) {
+                if (aftertext[confirm] === ']') {
+                    if_after_confirm = 2;
+                    round_after_confirm = 2;
+
                 }
             }
+        }
+
+
 
 
             if(event.keyCode===37){ //LEFT
                 console.log(if_before_confirm)
                 console.log(if_after_confirm)
-
-                if(num_value_val[selectPos_s]==='+' || num_value_val[selectPos_s]==='-' || num_value_val[selectPos_s]==='*'||num_value_val[selectPos_s]==='/'){
-                    $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
-                }
-                else if(if_before_confirm===2&&if_after_confirm===2){
+                if(if_before_confirm===2&&if_after_confirm===2){
                     $('#Function_description').val("IF[비교값,참,거짓] 조건값을&#10;구하는 함수입니다.")
                     $('#function_explanation').val("IF[비교값,참,거젓] 조건값을 구하는 함수입니다.")
                 }
@@ -323,13 +479,13 @@
 
             }
             else if(event.keyCode==39){ //RIGHT
-                if(num_value_val[selectPos_s-1]==='+' ||num_value_val[selectPos_s]==='-'||num_value_val[selectPos_s]==='*'||num_value_val[selectPos_s]==='/'   ){
-                    $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
-                }
-                else if(if_before_confirm===2&&if_after_confirm===2){
+                // if(num_value_val[selectPos_s-1]==='+' ||num_value_val[selectPos_s]==='-'||num_value_val[selectPos_s]==='*'||num_value_val[selectPos_s]==='/'   ){
+                //     $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
+                // }
+                if(if_before_confirm===2&&if_after_confirm===2 &&(after_bracket===before_bracket)){
                     $('#Function_description').val("IF[비교값,참,거젓] 조건값을 구하는 함수입니다.")
                 }
-                else if(round_before_confirm===2&&round_after_confirm===2){
+                else if(round_before_confirm===2&&round_after_confirm===2&&(after_bracket===before_bracket)){
                     $('#Function_description').val("Round[입력값,적용값] 적용값이 양수일 때 소수점 아래에서 반올림, 음수일 경우 정수자리에서 반올림 되도록 합니다.")
                 }
                 else{
@@ -342,72 +498,80 @@
             else if(event.keyCode===13) {
                 equals_button()
             }
-
-            else if(event.keyCode===8){ //지우기
+            // else if(event.keyCode===8) { //지우기
+            //     console.log(num_value_val[selectPos_s-1])
+            //     console.log(num_value_val)
             //     console.log(beforetext)
             //     console.log(beforetext.length-1)
-            //     //함수라는 걸 인식한 다음 이런 부분에 대해서 비교+
-            //     if(if_before_confirm===2&&if_after_confirm===2){
-            //         var comma_find_before_variable=0;
-            //         while(1){
-            //             if(beforetext[comma_find_before_variable]===','){
-            //                 before_comma=before_comma+1
-            //                 console.log(before_comma)
-            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
-            //             }
-            //             else if(comma_find_before_variable===beforetext.length){
-            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
-            //                 break;
-            //             }
-            //             else if(comma_find_before_variable>10){
-            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
-            //                 break;
-            //             }
-            //             comma_find_before_variable++
-            //             console.log(comma_find_before_variable)
-            //         }
+            //     var comma_find_before_variable=0;
             //
-            //         var comma_find_after_variable=0;
-            //         while(1){
-            //             if(aftertext[comma_find_after_variable]===','){
-            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
-            //                 after_comma=after_comma+1
-            //                 console.log(after_comma)
-            //             }
-            //             else if(comma_find_after_variable===aftertext.length){
-            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
-            //                 break;
-            //             }
-            //             else if(comma_find_after_variable>10){
-            //                 console.log("hiiiiiiiiiiiiiiiiiiii")
-            //                 return
-            //             }
-            //             comma_find_after_variable++
-            //             console.log(comma_find_after_variable)
-            //         }
-            //         console.log(before_comma)
-            //         console.log(after_comma)
-            //         if(((if_before_confirm===0||if_after_confirm===0)&&(before_comma+after_comma==2))||before_comma+after_comma!=2){
-            //             alert("삭제")
             //
-            //         }
             //
+            //     while(1){
+            //         if(beforetext[comma_find_before_variable]===','){
+            //             before_comma=before_comma+1
+            //             console.log(before_comma)
+            //         }
+            //         else if(comma_find_before_variable===beforetext.length){
+            //             break;
+            //         }
+            //         else if(comma_find_before_variable>10){
+            //             break;
+            //         }
+            //         comma_find_before_variable++
+            //         console.log(comma_find_before_variable)
             //     }
             //
+            //     var comma_find_after_variable=0;
+            //     while(1){
+            //         if(aftertext[comma_find_after_variable]===','){
+            //             after_comma=after_comma+1
+            //             console.log(after_comma)
+            //         }
+            //         else if(comma_find_after_variable===aftertext.length){
+            //             break;
+            //         }
+            //         else if(comma_find_after_variable>10){
+            //             return
+            //         }
+            //         comma_find_after_variable++
+            //         console.log(comma_find_after_variable)
+            //     }
+            //     console.log(before_comma)
+            //     console.log(after_comma)
+            //     if(if_before_confirm===0||if_after_confirm===0||(before_comma+after_comma<2)){
+            //         alert("F")
+            //         num_value_val=num_value_val_keydown
+            //         var find_if=0;
+            //         // while(1){
+            //         //     if(num_value_val[find_if]==='IF'){
+            //         //         while(1){
+            //         //             if(num_value_val[find_if]===']'){
+            //         //                 num_value_val.remove(num_value_val[find_if])
+            //         //                 break;
+            //         //             }
+            //         //             num_value_val.remove(num_value_val[find_if])
+            //         //         }
+            //         //     }
+            //         //     find_if=find_if+1
+            //         // }
+            //         // $("#Equation").val(num_value_val)
+            //     }
             //
-            }
+            // }
 
-            //자동완성
+
+        // /자동완성
             else if(65<=event.keyCode<=90){
-                if(event.keyCode===70&&beforetext[beforetext.length-2]==='I'){//f누르면 자동완성되도록
+                if(event.keyCode===70&&beforetext[beforetext.length-1]==='IF'){//f누르면 자동완성되도록
                     $("#Equation").val(beforetext+ "[,,]" +aftertext)
                     var cursor=beforetext.length+1;
                     console.log(beforetext.length+1)
                     $("#Equation").selectRange(cursor,cursor)
                 }
-                else if(event.keyCode===68&&beforetext[beforetext.length-2]==='n'&&beforetext[beforetext.length-3]==='u'&&beforetext[beforetext.length-4]==='o'&&beforetext[beforetext.length-5]==='R'){
+                else if(event.keyCode===68&&beforetext[beforetext.length-1]==='Round'){
                     $("#Equation").val(beforetext+ "[,]" +aftertext)
-                    var cursor=beforetext.length+1;
+                    var cursor=beforetext.length+5;
                     console.log(beforetext.length+1)
                     $("#Equation").selectRange(cursor,cursor)
 
@@ -417,8 +581,6 @@
         });
 
 
-    // function function_discripton(){
-    // }
 
 
     $(document).on("click",'#Equation', function(){
@@ -433,14 +595,6 @@
 
         selectPos_s = num_value.selectionStart; //END START 차이
         selectPos_e = num_value.selectionEnd;
-
-        if(num_value_val[selectPos_e]==='+' || num_value_val[selectPos_e]==='-' || num_value_val[selectPos_e]==='*'||num_value_val[selectPos_e]==='/'){
-            $('#Function_description').val("사칙연산의 우선순위는 (괄호)>*>/>+/-로 진행됩니다.")
-        }
-
-        else{
-            $('#Function_description').val("")
-        }
     });
 
 
