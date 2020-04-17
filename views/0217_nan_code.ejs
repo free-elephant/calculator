@@ -1,0 +1,84 @@
+
+var  num_value_val = new Array()
+var selectPos_s =0
+var num_value = document.getElementById('Equation');
+var num_value_value=num_value.value;
+num_value_val = num_value.value.split(""); //배열
+console.log( num_value_value+"!!!!!!!!!!!!!!!!")
+var selectPos_s = num_value.selectionStart; //END START 차이
+console.log(num_value_val+"!!!!!!!!!!!!!!!!")
+var num_value_val_eng=eng_paste(num_value_val)
+console.log(num_value_val_eng+"!!!!!!!!!!!!!!!!")
+
+var beforetext = num_value_value.substring(0, Number(selectPos_s));  // 기존텍스트 ~ 커서시작점 까지의 문자
+var aftertext = num_value_value.substring(num_value.selectionEnd, num_value_value.length);
+beforetext =eng_paste( beforetext )
+aftertext =eng_paste( aftertext )
+console.log(selectPos_s)
+
+
+
+console.log(beforetext[beforetext.length-3])
+console.log(beforetext[beforetext.length-2])
+console.log(beforetext[beforetext.length-1])
+console.log(beforetext[beforetext.length])
+console.log( aftertext[0])
+
+if(pattern_eng.test(num_value_val)===true ) {
+var b_confirm = 0;
+for (var confirm=0; num_value_val_eng.length>confirm;confirm++){
+console.log(beforetext[beforetext.length - confirm - 1])
+if (beforetext[beforetext.length - confirm - 1] === ']') {
+var before_a = 0;
+while (1) {
+if (beforetext[beforetext.length - confirm - 2 - before_a] === '[') {
+before_a = beforetext.length - confirm - 2  - before_a
+console.log( before_a )
+break;
+}
+before_a++
+
+}
+confirm = before_a + 2
+}
+console.log("out")
+if (beforetext[beforetext.length - confirm - 1] === '[') {
+console.log("@2")
+if (beforetext[beforetext.length - confirm - 2] === 'IF') {
+console.log("@2")
+if_before_confirm = 2;
+break;
+
+}
+else if (beforetext[beforetext.length - confirm - 2] === 'Round') {
+console.log("@2")
+round_before_confirm = 2;
+break;
+}
+}
+else if((beforetext[beforetext.length - confirm - 1] === 'IF' && aftertext[0]==='[')
+||(beforetext[beforetext.length - confirm - 1] === 'I' && aftertext[0]==='F'&& aftertext[1]==='[')){
+if_before_confirm = 2;
+break;
+}
+else if((beforetext[beforetext.length - confirm - 1] === 'Round' && aftertext[0]==='[')
+||(beforetext[beforetext.length - confirm - 1] === 'R' && aftertext[0]==='ound'&&aftertext[1]==='[')
+||(beforetext[beforetext.length - confirm - 1] === 'Ro' && aftertext[0]==='und'&&aftertext[1]==='[')
+||(beforetext[beforetext.length - confirm - 1] === 'Rou' && aftertext[0]==='nd'&&aftertext[1]==='[')
+||(beforetext[beforetext.length - confirm - 1] === 'Roun' && aftertext[0]==='d'&&aftertext[1]==='[')
+){
+round_before_confirm = 2;
+break;
+}
+}
+
+
+for (var confirm = 0; aftertext.length > confirm; confirm++) {
+if (aftertext[confirm] === ']') {
+if_after_confirm = 2;
+round_after_confirm = 2;
+
+}
+}
+}
+
